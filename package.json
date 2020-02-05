@@ -1,21 +1,8 @@
 {
-  "name": "@coreui/coreui-free-angular-admin-template",
+  "name": "lrbsl-frontend",
   "version": "2.7.5",
-  "description": "CoreUI Free Angular 2+ Admin Template",
-  "author": {
-    "name": "Łukasz Holeczek",
-    "url": "http://holeczek.pl",
-    "github": "https://github.com/mrholek",
-    "twitter": "https://twitter.com/lukaszholeczek"
-  },
-  "contributors": [
-    {
-      "name": "Andrzej Kopański",
-      "url": "https://github.com/xidedix"
-    }
-  ],
-  "homepage": "https://coreui.io/angular",
-  "copyright": "Copyright 2020 creativeLabs Łukasz Holeczek",
+  "description": "Frontend application for LRBSL",
+  "author": "Ravindu Sachintha",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
