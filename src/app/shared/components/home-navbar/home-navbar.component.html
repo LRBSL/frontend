@@ -1,18 +1,19 @@
 <nav class="navbar navbar-light navbar-expand-lg fixed-top bg-white clean-navbar"
     style="padding-top: 10px;padding-bottom: 10px;">
-    <div class="container"><a class="navbar-brand logo" href="#home-section"><img class="d-sm-none"
-                src="assets/img/lrbsl-logo.png" style="width: 240px;" alt="lrbsl-logo"><img class="d-none d-sm-block"
-                src="assets/img/lrbsl-logo-lg.png" style="width: 340px;height: 45px;" alt="lrbsl-logo"></a>
-        <button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle
-                navigation</span><span class="navbar-toggler-icon"></span></button>
+    <div class="container"><a class="navbar-brand logo" href="/"><img class="d-sm-none" src="assets/img/lrbsl-logo.png"
+        style="width: 240px;" alt="lrbsl-logo"><img class="d-none d-sm-block" src="assets/img/lrbsl-logo-lg.png"
+        style="width: 340px;height: 45px;" alt="lrbsl-logo"></a>
+        <button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">
+            Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse" id="navcol-1">
             <ul class="nav navbar-nav ml-auto">
-                <li class="nav-item" role="presentation"><a class="nav-link active" id="home-nav-item"
-                        href="#home-section">Home</a></li>
-                <li class="nav-item" role="presentation"><a class="nav-link active" href="#service-section">SERVICES</a>
+                <li class="nav-item" role="presentation"><a class="nav-link" id="home-nav-item"
+                    routerLink="/lrbsl" fragment="home-section">home</a></li>
+                <li *ngIf="!isNotHomeRoute()" class="nav-item" role="presentation"><a class="nav-link"
+                    routerLink="/lrbsl" fragment="service-section">services</a>
                 </li>
-                <li class="nav-item" role="presentation"><a class="nav-link active" href="#info-section">about
-                        project</a></li>
+                <li *ngIf="!isNotHomeRoute()" class="nav-item" role="presentation"><a class="nav-link"
+                    routerLink="/lrbsl" fragment="info-section">about project</a></li>
             </ul>
         </div>
     </div>

@@ -7,10 +7,11 @@ import { ContactComponent } from './pages/contact/contact.component';
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { SharedModule } from '../shared/shared.module';
+import { LayoutComponent } from './layout/layout.component';
 
 
 @NgModule({
-  declarations: [HomeComponent, ContactComponent, LoginComponent, RegisterComponent],
+  declarations: [HomeComponent, ContactComponent, LoginComponent, RegisterComponent, LayoutComponent],
   imports: [
     CommonModule,
     HomeRoutingModule,
