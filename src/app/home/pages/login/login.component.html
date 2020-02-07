@@ -1,22 +1,25 @@
 <app-home-navbar></app-home-navbar>
 
 <main class="page login-page">
-    <section class="clean-block clean-form dark" style="margin-top: -10px;">
+    <section class="clean-block clean-form dark" style="margin-top: 40px;" id="login-section">
         <div class="container">
             <div class="block-heading">
-                <h2 class="text-info">Log In</h2>
-                <p>Lorem ipsum dolor sit amet</p>
+                <h2 class="text-info" style="margin-top: 40px;">Log In As A {{currentUser.userType}}</h2>
+                <p>You need to log here to {{currentUser.userDescription}}.</p>
             </div>
-            <form>
-                <div class="form-group"><label for="email">Email</label><input class="form-control item" type="email"
-                        id="email"></div>
+            <form [formGroup]="loginForm" (ngSubmit)="submitLogin()">
+                <div class="form-group"><label for="username">Username</label><input class="form-control item"
+                        type="text" id="username" name="username" formControlName="username"></div>
                 <div class="form-group"><label for="password">Password</label><input class="form-control"
-                        type="password" id="password"></div>
+                        type="password" id="password" name="password" formControlName="password"></div>
                 <div class="form-group">
-                    <div class="form-check"><input class="form-check-input" type="checkbox" id="checkbox"><label
-                            class="form-check-label" for="checkbox">Remember me</label></div>
+                    <div class="form-check"><input class="form-check-input" type="checkbox" id="checkbox"
+                            name="rememberMe" formControlName="rememberMe"><label class="form-check-label"
+                            for="checkbox">Remember me</label></div>
                 </div><button class="btn btn-primary btn-block" type="submit">Log In</button>
             </form>
         </div>
     </section>
 </main>
+
+<app-home-footer></app-home-footer>

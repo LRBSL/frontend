@@ -3,14 +3,17 @@
         <div class="container">
             <div class="block-heading">
                 <h2 class="text-info">Contact Us</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quam urna, dignissim nec auctor in,
-                    mattis vitae leo.</p>
+                <p>For getting more information, soupporting us, suggesting new features & ideas, informing faults & errors or anything, contact us.</p>
             </div>
-            <form>
-                <div class="form-group"><label>Name</label><input class="form-control" type="text"></div>
-                <div class="form-group"><label>Subject</label><input class="form-control" type="text"></div>
-                <div class="form-group"><label>Email</label><input class="form-control" type="email"></div>
-                <div class="form-group"><label>Message</label><textarea class="form-control"></textarea></div>
+            <form [formGroup]="contactForm">
+                <div class="form-group"><label>Name</label>
+                    <input class="form-control" type="text" name="name" formControlName="name"></div>
+                <div class="form-group"><label>Subject Title</label>
+                    <input class="form-control" type="text" name="subject" formControlName="subject"></div>
+                <div class="form-group"><label>Email</label>
+                    <input class="form-control" type="email" name="email" formControlName="email"></div>
+                <div class="form-group"><label>Message</label>
+                    <textarea class="form-control" name="message" formControlName="message"></textarea></div>
                 <div class="form-group"><button class="btn btn-primary btn-block" type="submit">Send</button></div>
             </form>
         </div>

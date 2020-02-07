@@ -12,11 +12,10 @@ const routes: Routes = [
   { path: "lrbsl", component: LayoutComponent, children: [
     { path: "", component: HomeComponent },
     { path: "contact", component: ContactComponent}
-  ], runGuardsAndResolvers: "always"},
+  ]},
   { path: "lrbsl-login/rlr", component: LoginComponent },
   { path: "lrbsl-login/notary", component: LoginComponent },
-  { path: "lrbsl-login/surveyor", component: LoginComponent },
-  { path: "**", component: Page404Component }
+  { path: "lrbsl-login/surveyor", component: LoginComponent }
 ];
 
 @NgModule({
