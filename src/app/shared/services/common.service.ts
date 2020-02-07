@@ -20,6 +20,12 @@ export class CommonService {
         $("#home-nav-item").addClass("active");
       }
     });
+
+    // nav deactivate jquery method for get service button
+    $(document).on("click", "#service-btn", function () {
+      $(".nav").find(".active").removeClass("active");
+      $("#service-nav-item").addClass("active");
+    });
   }
 
   public setScrollPageAnimation() {

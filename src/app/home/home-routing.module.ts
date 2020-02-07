@@ -3,6 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
 import { ContactComponent } from './pages/contact/contact.component';
 import { LayoutComponent } from './layout/layout.component';
+import { LoginComponent } from './pages/login/login.component';
+import { Page404Component } from '../shared/components/page404/page404.component';
 
 
 const routes: Routes = [
@@ -10,7 +12,11 @@ const routes: Routes = [
   { path: "lrbsl", component: LayoutComponent, children: [
     { path: "", component: HomeComponent },
     { path: "contact", component: ContactComponent}
-  ], runGuardsAndResolvers: "always"}
+  ], runGuardsAndResolvers: "always"},
+  { path: "lrbsl-login/rlr", component: LoginComponent },
+  { path: "lrbsl-login/notary", component: LoginComponent },
+  { path: "lrbsl-login/surveyor", component: LoginComponent },
+  { path: "**", component: Page404Component }
 ];
 
 @NgModule({
