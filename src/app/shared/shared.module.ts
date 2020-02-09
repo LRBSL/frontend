@@ -5,15 +5,15 @@ import { HomeFooterComponent } from './components/home-footer/home-footer.compon
 import { RouterModule } from '@angular/router';
 import { Page404Component } from './components/page404/page404.component';
 import { LoadingPageComponent } from './components/loading-page/loading-page.component';
-import { SideBarComponent } from './components/side-bar/side-bar.component';
-
-
+import { SideBarComponent } from './components/rlr-side-bar/rlr-side-bar.component';
+import { SysNavbarComponent } from './components/sys-navbar/sys-navbar.component';
+import { SysFooterComponent } from './components/sys-footer/sys-footer.component';
 
 @NgModule({
-  declarations: [HomeNavbarComponent, HomeFooterComponent, Page404Component, LoadingPageComponent, SideBarComponent],
+  declarations: [HomeNavbarComponent, HomeFooterComponent, Page404Component, LoadingPageComponent, SideBarComponent, SysNavbarComponent, SysFooterComponent],
   imports: [
     CommonModule, RouterModule
   ],
-  exports: [HomeNavbarComponent, HomeFooterComponent, Page404Component, LoadingPageComponent, SideBarComponent]
+  exports: [HomeNavbarComponent, HomeFooterComponent, Page404Component, LoadingPageComponent, SideBarComponent, SysNavbarComponent, SysFooterComponent]
 })
 export class SharedModule { }

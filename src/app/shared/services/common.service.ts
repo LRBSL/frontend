@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import * as $ from 'jquery';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CommonService {
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   public setNavDeactive() {
     // nav deactivate jquery method
@@ -71,5 +72,15 @@ export class CommonService {
         // $('.sidebar .collapse').collapse('hide');
       };
     });
+  }
+
+  public getCurrentUrlLastSegmentAsTitle() {
+    let url_cont = this.router.url.split("/");
+    let title_seg = url_cont[url_cont.length - 1].split("-");
+    let result: string = "";
+    title_seg.forEach((title) => {
+      result = result + title.charAt(0).toUpperCase() + title.slice(1) + " ";
+    })
+    return result;
   }
 }

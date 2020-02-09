@@ -3,8 +3,8 @@ import { CommonService } from '../../services/common.service';
 
 @Component({
   selector: 'app-side-bar',
-  templateUrl: './side-bar.component.html',
-  styleUrls: ['./side-bar.component.css']
+  templateUrl: './rlr-side-bar.component.html',
+  styleUrls: ['./rlr-side-bar.component.css']
 })
 export class SideBarComponent implements OnInit {
 
@@ -12,6 +12,7 @@ export class SideBarComponent implements OnInit {
 
   ngOnInit() {
     this.commonService.toggleSideBar();
+    this.commonService.setNavDeactive();
   }
 
 }
