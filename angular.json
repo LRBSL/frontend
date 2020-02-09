@@ -24,7 +24,17 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.css",
+              {
+                "input": "src/assets/bootstrap/css/bootstrap-home.min.css",
+                "bundleName": "lrbsl-home",
+                "inject": false
+              },
+              {
+                "input": "src/assets/bootstrap/css/bootstrap-rlr.min.css",
+                "bundleName": "lrbsl-rlr",
+                "inject": false
+              }
             ],
             "scripts": ["./node_modules/jquery/dist/jquery.min.js"]
           },

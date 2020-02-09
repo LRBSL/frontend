@@ -6,6 +6,7 @@ import { LoadingPageComponent } from './shared/components/loading-page/loading-p
 
 const routes: Routes = [
   { path: "", loadChildren: () => import('./home/home.module').then(m => m.HomeModule) },
+  { path: "lrbsl-rlr", loadChildren: () => import('./rlr/rlr.module').then( m => m.RlrModule) },
   { path: "loading", component: LoadingPageComponent },
   { path: "**", component: Page404Component }
 ];

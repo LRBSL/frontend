@@ -8,13 +8,15 @@ import { OngoingTransactionsComponent } from './pages/ongoing-transactions/ongoi
 import { SearchInformationComponent } from './pages/search-information/search-information.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { LayoutComponent } from './layout/layout.component';
+import { SharedModule } from '../shared/shared.module';
 
 
 @NgModule({
   declarations: [DashboardComponent, NotaryRegistrationComponent, OngoingTransactionsComponent, SearchInformationComponent, ProfileComponent, LayoutComponent],
   imports: [
     CommonModule,
-    RlrRoutingModule
+    RlrRoutingModule,
+    SharedModule
   ]
 })
 export class RlrModule { }

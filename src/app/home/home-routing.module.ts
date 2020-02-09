@@ -4,7 +4,6 @@ import { HomeComponent } from './pages/home/home.component';
 import { ContactComponent } from './pages/contact/contact.component';
 import { LayoutComponent } from './layout/layout.component';
 import { LoginComponent } from './pages/login/login.component';
-import { Page404Component } from '../shared/components/page404/page404.component';
 
 
 const routes: Routes = [
