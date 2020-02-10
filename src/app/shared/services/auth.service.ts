@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpResolverService } from './http-resolver.service';
 import { BackendURLS } from '../utils/backend-urls.enum';
 import { CookieService } from 'ngx-cookie-service';
+import { Subscription, Observable } from 'rxjs';
 
 export interface AuthUser {
   id: number,
@@ -34,8 +35,22 @@ export class AuthService {
   }
 
   public loginUserBlockchain(regId: string) {
-    return this.httpResolverService.realizarHttpPost(
-      BackendURLS.user_login_blockchain, { regId: regId });
+    return new Promise<object>((resolve, reject) => {
+      const obsv1 = this.httpResolverService.realizarHttpPost(
+        BackendURLS.user_login_blockchain_identity_name, { });
+      const obsv2 = this.httpResolverService.realizarHttpPost(
+        BackendURLS.user_login_blockchain_identity_org, { });
+      const obsv3 = this.httpResolverService.realizarHttpPost(
+        BackendURLS.user_login_blockchain, { });
+
+      this.setBlockchainLoginData(obsv1).then(() => {
+        this.setBlockchainLoginData(obsv2).then(() => {
+          this.setBlockchainLoginData(obsv3).then(() => {
+            resolve();
+          }).catch((error) => reject(error));
+        }).catch((error) => reject(error));
+      }).catch((error) => reject(error));
+    });
   }
 
   public async logout() {
@@ -45,6 +60,19 @@ export class AuthService {
 
   private delay(ms: number) {
     return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  private setBlockchainLoginData(loginUserBlockchain: Observable<Object>) {
+    let obsv = loginUserBlockchain;
+    return new Promise<object>((resolve, reject) => {
+      obsv.subscribe((result: any) => {
+        if (result.success) {
+          resolve();
+        } else {
+          reject(result.error);
+        }
+      });
+    });
   }
 
 }

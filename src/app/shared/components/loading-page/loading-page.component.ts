@@ -14,23 +14,21 @@ export class LoadingPageComponent implements OnInit, OnDestroy {
   triple_dot: string = "\xa0\xa0\xa0\xa0\xa0\xa0";
 
   private subsLoginUserBackend: Subscription;
-  private subsLoginUserBlockchain: Subscription;
 
   constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit() {
     this.tripleDotAnimation();
     this.getCurrentAuthUserData().then((authUser: any) => {
-      this.getBlockchainLoginData(authUser.regId).then(() => {
+      this.authService.loginUserBlockchain(authUser.regId).then(() => {
         this.authService.currentUser = authUser;
         this.router.navigate(["/lrbsl-rlr"]);
-      }).catch((error) => console.log(error))
+      }).catch((error) => console.log(error));
     }).catch((error) => console.log(error))
   }
 
   ngOnDestroy() {
     this.subsLoginUserBackend.unsubscribe();
-    this.subsLoginUserBlockchain.unsubscribe();
   }
 
   getCurrentAuthUserData() {
@@ -38,18 +36,6 @@ export class LoadingPageComponent implements OnInit, OnDestroy {
       this.subsLoginUserBackend = this.authService.loginUserBackend().subscribe((result: any) => {
         if(result.success && result.data != null) {
           resolve(result.data);
-        } else {
-          reject(result.error);
-        }
-      });
-    });
-  }
-
-  getBlockchainLoginData(regId: string) {
-    return new Promise<object>((resolve, reject) => {
-      this.subsLoginUserBlockchain = this.authService.loginUserBlockchain(regId).subscribe((result: any) => {
-        if(result.success) {
-          resolve();
         } else {
           reject(result.error);
         }
