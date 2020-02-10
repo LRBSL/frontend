@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import * as $ from 'jquery';
 import * as Chart from 'chart.js';
 import { BlockchainService } from 'src/app/shared/services/blockchain.service';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -14,11 +15,11 @@ export class DashboardComponent implements OnInit {
   countRegisteredNotaries: number;
   countLands: number;
 
-  constructor(private blockchainService: BlockchainService) { }
+  constructor(private blockchainService: BlockchainService, private authService: AuthService) { }
 
   ngOnInit() {
-    $(document).ready(function(){
-      $('[data-bs-chart]').each(function(index, elem) {
+    $(document).ready(function () {
+      $('[data-bs-chart]').each(function (index, elem) {
         this.chart = new Chart($(elem), $(elem).data('bs-chart'));
       });
     });
@@ -29,6 +30,8 @@ export class DashboardComponent implements OnInit {
     setTimeout(() => {
       this.countOngoingTransactions = this.blockchainService.getOngoingTransactionCount();
     }, 20000);
+
+    console.log(this.authService.currentUser);
   }
 
 }

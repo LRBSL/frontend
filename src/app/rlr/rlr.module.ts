@@ -9,6 +9,7 @@ import { SearchInformationComponent } from './pages/search-information/search-in
 import { ProfileComponent } from './pages/profile/profile.component';
 import { LayoutComponent } from './layout/layout.component';
 import { SharedModule } from '../shared/shared.module';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { SharedModule } from '../shared/shared.module';
   imports: [
     CommonModule,
     RlrRoutingModule,
-    SharedModule
+    SharedModule,
+    ReactiveFormsModule
   ]
 })
 export class RlrModule { }

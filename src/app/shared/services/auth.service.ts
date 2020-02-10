@@ -2,13 +2,22 @@ import { Injectable } from '@angular/core';
 import { HttpResolverService } from './http-resolver.service';
 import { BackendURLS } from '../utils/backend-urls.enum';
 import { CookieService } from 'ngx-cookie-service';
-import { Subscription, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 export interface AuthUser {
   id: number,
   type: string,
   email: string,
   password: string
+}
+
+export interface RegNotary {
+  fname: string,
+  lname: string,
+  nic: string,
+  regId: string,
+  email: string
 }
 
 @Injectable({
@@ -19,7 +28,10 @@ export class AuthService {
   _currentAuthUser: AuthUser;
   currentUser: any = null;
 
-  constructor(private httpResolverService: HttpResolverService, private cookieService: CookieService) { }
+  constructor(
+    private httpResolverService: HttpResolverService,
+    private cookieService: CookieService,
+    private router: Router) { }
 
   public get currentAuthUser(): AuthUser {
     return this._currentAuthUser;
@@ -37,11 +49,11 @@ export class AuthService {
   public loginUserBlockchain(regId: string) {
     return new Promise<object>((resolve, reject) => {
       const obsv1 = this.httpResolverService.realizarHttpPost(
-        BackendURLS.user_login_blockchain_identity_name, { });
+        BackendURLS.user_login_blockchain_identity_name, {});
       const obsv2 = this.httpResolverService.realizarHttpPost(
-        BackendURLS.user_login_blockchain_identity_org, { });
+        BackendURLS.user_login_blockchain_identity_org, {});
       const obsv3 = this.httpResolverService.realizarHttpPost(
-        BackendURLS.user_login_blockchain, { });
+        BackendURLS.user_login_blockchain, {});
 
       this.setBlockchainLoginData(obsv1).then(() => {
         this.setBlockchainLoginData(obsv2).then(() => {
@@ -53,9 +65,20 @@ export class AuthService {
     });
   }
 
+  public registerNotary(notary: RegNotary) {
+    return this.httpResolverService.realizarHttpPost(
+      BackendURLS.notary_register, { notary: notary });
+  }
+
   public async logout() {
     this.cookieService.deleteAll();
     await this.delay(600);
+  }
+
+  public checkCurrentUserExist() {
+    if (this.currentUser == null) {
+      this.router.navigate(["/lrbsl"]);
+    }
   }
 
   private delay(ms: number) {

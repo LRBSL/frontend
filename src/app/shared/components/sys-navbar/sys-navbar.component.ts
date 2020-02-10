@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
+import { CommonService } from '../../services/common.service';
 
 @Component({
   selector: 'app-sys-navbar',
@@ -9,7 +10,10 @@ import { Router } from '@angular/router';
 })
 export class SysNavbarComponent implements OnInit {
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(
+    private authService: AuthService, 
+    private router: Router,
+    private commonService: CommonService) { }
 
   ngOnInit() {
   }

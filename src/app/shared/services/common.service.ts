@@ -84,4 +84,12 @@ export class CommonService {
     })
     return result;
   }
+
+  public getCurrentUrlAsTitle() {
+    let url_cont = this.router.url.split("/");
+    let title_seg = url_cont[1];
+    if(title_seg == "lrbsl-rlr") return "Regional Land Registry";
+    if(title_seg == "lrbsl-notary") return "Notary Service";
+    if(title_seg == "lrbsl-surveyor") return "Surveyor Service";
+  }
 }
