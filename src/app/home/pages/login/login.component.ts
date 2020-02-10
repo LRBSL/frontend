@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { CommonService } from 'src/app/shared/services/common.service';
+import { DOCUMENT } from '@angular/common';
 
 interface UserInfo {
   userId: number,
@@ -36,16 +38,21 @@ export class LoginComponent implements OnInit {
     },
   ];
 
-  constructor(private router: Router, private authService: AuthService) { }
+  constructor(
+    private router: Router, 
+    private authService: AuthService, 
+    private commonService: CommonService,
+    @Inject(DOCUMENT) private document: Document) { }
 
   currentUser: UserInfo;
   loginForm = new FormGroup({
-    username: new FormControl('', [Validators.required]),
-    password: new FormControl('', [Validators.required]),
+    email: new FormControl('', [Validators.required]),
+    password: new FormControl('', [Validators.required, Validators.min(6)]),
     rememberMe: new FormControl(false)
   });
 
   ngOnInit() {
+    this.commonService.loadStyle(this.document, 'bootstrap-theme', "assets/bootstrap/css/bootstrap-home.min.css");
     this.getUserInfoByURL();
   }
 
@@ -65,12 +72,20 @@ export class LoginComponent implements OnInit {
       this.authService.currentAuthUser = {
         id: this.currentUser.userId,
         type: this.currentUser.userType,
-        username: this.loginForm.controls.username.value,
+        email: this.loginForm.controls.email.value,
         password: this.loginForm.controls.password.value
       };
       this.router.navigate(["loading"]);
     } else {
-      alert("Login credentials are not provided");
+      if(!this.loginForm.controls.email.value){
+        alert("Email is not provided");
+      } else if(!this.loginForm.controls.password.value){
+        alert("Password is not provided");
+      } else if(!this.loginForm.controls.email.value && !this.loginForm.controls.password.value) {
+        alert("Login credentials are not provided");
+      } else {
+        alert("Login credentials are incorrect");
+      }
     }
   }
 

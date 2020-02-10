@@ -46,17 +46,18 @@ export class CommonService {
     });
   }
 
-  public loadStyle(doc: Document, styleName: string) {
+  public loadStyle(doc: Document, id: string, styleName: string) {
     const head = doc.getElementsByTagName('head')[0];
 
-    let themeLink = doc.getElementById(
-      'bootstrap-theme'
-    ) as HTMLLinkElement;
+    let themeLink = doc.getElementById(id) as HTMLLinkElement;
     if (themeLink) {
+      if (themeLink.href.includes(styleName)) {
+        return;
+      }
       themeLink.href = styleName;
     } else {
       const style = doc.createElement('link');
-      style.id = 'bootstrap-theme';
+      style.id = id;
       style.rel = 'stylesheet';
       style.href = `${styleName}`;
 

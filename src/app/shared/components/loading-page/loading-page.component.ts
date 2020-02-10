@@ -1,28 +1,72 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
+import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-loading-page',
   templateUrl: './loading-page.component.html',
   styleUrls: ['./loading-page.component.css']
 })
-export class LoadingPageComponent implements OnInit {
+export class LoadingPageComponent implements OnInit, OnDestroy {
 
   loading_status: string;
   triple_dot: string = "\xa0\xa0\xa0\xa0\xa0\xa0";
 
-  constructor(private authService: AuthService) { }
+  private subsLoginUserBackend: Subscription;
+  private subsLoginUserBlockchain: Subscription;
+
+  constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit() {
+    this.tripleDotAnimation();
+    this.getCurrentAuthUserData().then((authUser: any) => {
+      this.getBlockchainLoginData(authUser.regId).then(() => {
+        this.authService.currentUser = authUser;
+        this.router.navigate(["/lrbsl-rlr"]);
+      }).catch((error) => console.log(error))
+    }).catch((error) => console.log(error))
+  }
+
+  ngOnDestroy() {
+    this.subsLoginUserBackend.unsubscribe();
+    this.subsLoginUserBlockchain.unsubscribe();
+  }
+
+  getCurrentAuthUserData() {
+    return new Promise<object>((resolve, reject) => {
+      this.subsLoginUserBackend = this.authService.loginUserBackend().subscribe((result: any) => {
+        if(result.success && result.data != null) {
+          resolve(result.data);
+        } else {
+          reject(result.error);
+        }
+      });
+    });
+  }
+
+  getBlockchainLoginData(regId: string) {
+    return new Promise<object>((resolve, reject) => {
+      this.subsLoginUserBlockchain = this.authService.loginUserBlockchain(regId).subscribe((result: any) => {
+        if(result.success) {
+          resolve();
+        } else {
+          reject(result.error);
+        }
+      });
+    });
+  }
+
+  tripleDotAnimation() {
     let dot_count: number = 0;
     setInterval(() => {
-      if(dot_count == 0) {
+      if (dot_count == 0) {
         dot_count++;
         this.triple_dot = "\xa0.\xa0\xa0\xa0\xa0";
-      } else if(dot_count == 1) {
+      } else if (dot_count == 1) {
         dot_count++;
         this.triple_dot = "\xa0.\xa0.\xa0\xa0";
-      } else if(dot_count == 2) {
+      } else if (dot_count == 2) {
         dot_count++;
         this.triple_dot = "\xa0.\xa0.\xa0.";
       } else {

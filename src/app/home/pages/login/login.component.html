@@ -8,8 +8,8 @@
                 <p>You need to log here to {{currentUser.userDescription}}.</p>
             </div>
             <form [formGroup]="loginForm" (ngSubmit)="submitLogin()">
-                <div class="form-group"><label for="username">Username</label><input class="form-control item"
-                        type="text" id="username" name="username" formControlName="username"></div>
+                <div class="form-group"><label for="email">Email Address</label><input class="form-control item"
+                        type="email" id="email" name="email" formControlName="email"></div>
                 <div class="form-group"><label for="password">Password</label><input class="form-control"
                         type="password" id="password" name="password" formControlName="password"></div>
                 <div class="form-group">

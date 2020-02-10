@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as $ from 'jquery';
+import * as Chart from 'chart.js';
 
 @Component({
   selector: 'app-dashboard',

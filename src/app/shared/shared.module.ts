@@ -8,12 +8,29 @@ import { LoadingPageComponent } from './components/loading-page/loading-page.com
 import { SideBarComponent } from './components/rlr-side-bar/rlr-side-bar.component';
 import { SysNavbarComponent } from './components/sys-navbar/sys-navbar.component';
 import { SysFooterComponent } from './components/sys-footer/sys-footer.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
-  declarations: [HomeNavbarComponent, HomeFooterComponent, Page404Component, LoadingPageComponent, SideBarComponent, SysNavbarComponent, SysFooterComponent],
-  imports: [
-    CommonModule, RouterModule
+  declarations: [
+    HomeNavbarComponent,
+    HomeFooterComponent,
+    Page404Component,
+    LoadingPageComponent,
+    SideBarComponent,
+    SysNavbarComponent,
+    SysFooterComponent
   ],
-  exports: [HomeNavbarComponent, HomeFooterComponent, Page404Component, LoadingPageComponent, SideBarComponent, SysNavbarComponent, SysFooterComponent]
+  imports: [
+    CommonModule, RouterModule, HttpClientModule
+  ],
+  exports: [
+    HomeNavbarComponent,
+    HomeFooterComponent,
+    Page404Component,
+    LoadingPageComponent,
+    SideBarComponent,
+    SysNavbarComponent,
+    SysFooterComponent
+  ]
 })
 export class SharedModule { }
