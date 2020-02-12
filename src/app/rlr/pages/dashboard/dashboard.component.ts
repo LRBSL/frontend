@@ -30,8 +30,6 @@ export class DashboardComponent implements OnInit {
     setTimeout(() => {
       this.countOngoingTransactions = this.blockchainService.getOngoingTransactionCount();
     }, 20000);
-
-    console.log(this.authService.currentUser);
   }
 
 }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { BlockchainService } from 'src/app/shared/services/blockchain.service';
 
 @Component({
   selector: 'app-search-information',
@@ -7,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SearchInformationComponent implements OnInit {
 
-  constructor() { }
+  constructor(private blockchainService: BlockchainService) { }
 
   ngOnInit() {
+    this.blockchainService.getLandByID("0000000").subscribe((result) => {
+      console.log(result);
+    });
+    this.blockchainService.getAllLands().subscribe((result) => {
+      console.log(result);
+    })
   }
 
 }

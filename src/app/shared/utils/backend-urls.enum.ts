@@ -5,5 +5,9 @@ export enum BackendURLS {
     user_login_blockchain = "/api/user/auth/login-blockchain",
     user_register = "/api/user/auth/register",
     
-    notary_register = "/api/user/auth/register-notary"
+    notary_register = "/api/user/auth/register-notary",
+
+    blockchain_query_land = "/api/blockchain/query-land",
+    blockchain_query_all_lands = "/api/blockchain/query-all-lands",
+    blockchain_get_history_for_land = "/api/blockchain/get-history-for-land",
 }

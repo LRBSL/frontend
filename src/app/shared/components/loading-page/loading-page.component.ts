@@ -22,7 +22,9 @@ export class LoadingPageComponent implements OnInit, OnDestroy {
     this.getCurrentAuthUserData().then((authUser: any) => {
       this.authService.loginUserBlockchain(authUser.regId).then(() => {
         this.authService.currentUser = authUser;
-        this.router.navigate(["/lrbsl-rlr"]);
+        if(authUser.type == "rlr") { this.router.navigate(["/lrbsl-rlr"]); }
+        if(authUser.type == "notary") { this.router.navigate(["/lrbsl-notary"]); }
+        if(authUser.type == "surveyor") { this.router.navigate(["/lrbsl-surveyor"]); }
       }).catch((error) => console.log(error));
     }).catch((error) => console.log(error))
   }
