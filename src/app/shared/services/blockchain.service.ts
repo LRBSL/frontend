@@ -39,4 +39,8 @@ export class BlockchainService {
     );
   }
 
+  // sendEmail() {
+  //   return this.httpResolverService.realizarHttpGet(BackendURLS.blockchain_get_test);
+  // }
+
 }

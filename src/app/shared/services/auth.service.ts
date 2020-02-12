@@ -12,6 +12,23 @@ export interface AuthUser {
   password: string
 }
 
+export class User {
+  id: number;
+  type: string;
+  email: string;
+  regId: string;
+  password?: string;
+  createdAt?: string;
+  updatedAt?: string;
+  firstName?: string;
+  lastName?: string;
+  nic?: string;
+  contact?: string;
+  postalAddress?: string;
+  lastLogin?: string;
+  isActive?: boolean;
+}
+
 export interface RegNotary {
   fname: string,
   lname: string,
@@ -26,7 +43,7 @@ export interface RegNotary {
 export class AuthService {
 
   _currentAuthUser: AuthUser;
-  currentUser: any = null;
+  currentUser: User = new User();
 
   constructor(
     private httpResolverService: HttpResolverService,
@@ -46,7 +63,7 @@ export class AuthService {
       BackendURLS.user_login_backend, { email: this.currentAuthUser.email, password: this.currentAuthUser.password });
   }
 
-  public loginUserBlockchain(regId: string) {
+  public loginUserBlockchain() {
     return new Promise<object>((resolve, reject) => {
       const obsv1 = this.httpResolverService.realizarHttpPost(
         BackendURLS.user_login_blockchain_identity_name, {});
@@ -94,6 +111,8 @@ export class AuthService {
         } else {
           reject(result.error);
         }
+      }, (error) => {
+        reject(error);
       });
     });
   }

@@ -10,6 +10,9 @@ import { CookieService } from 'ngx-cookie-service';
 })
 export class LayoutComponent implements OnInit {
 
+  alert_type = "error";
+  alert_content = "Hello World";
+
   constructor(
     @Inject(DOCUMENT) private document: Document, 
     private commonService: CommonService,
@@ -18,5 +21,9 @@ export class LayoutComponent implements OnInit {
   ngOnInit() {
     this.commonService.loadStyle(this.document, 'bootstrap-theme', "assets/bootstrap/css/bootstrap-home.min.css");
     this.cookieService.deleteAll();
+  }
+
+  test () {
+    this.document.getElementById("openAlertBoxButton").click();
   }
 }

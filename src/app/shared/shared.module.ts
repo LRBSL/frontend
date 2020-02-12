@@ -11,6 +11,7 @@ import { SysFooterComponent } from './components/sys-footer/sys-footer.component
 import { HttpClientModule } from '@angular/common/http';
 import { NotarySideBarComponent } from './components/notary-side-bar/notary-side-bar.component';
 import { SurveyorSideBarComponent } from './components/surveyor-side-bar/surveyor-side-bar.component';
+import { AlertBoxComponent } from './components/alert-box/alert-box.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { SurveyorSideBarComponent } from './components/surveyor-side-bar/surveyo
     SysNavbarComponent,
     SysFooterComponent,
     NotarySideBarComponent,
-    SurveyorSideBarComponent
+    SurveyorSideBarComponent,
+    AlertBoxComponent
   ],
   imports: [
     CommonModule, RouterModule, HttpClientModule
@@ -36,7 +38,8 @@ import { SurveyorSideBarComponent } from './components/surveyor-side-bar/surveyo
     SysNavbarComponent,
     SysFooterComponent,
     NotarySideBarComponent,
-    SurveyorSideBarComponent
+    SurveyorSideBarComponent,
+    AlertBoxComponent
   ]
 })
 export class SharedModule { }

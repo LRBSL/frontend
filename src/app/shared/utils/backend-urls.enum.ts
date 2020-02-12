@@ -10,4 +10,6 @@ export enum BackendURLS {
     blockchain_query_land = "/api/blockchain/query-land",
     blockchain_query_all_lands = "/api/blockchain/query-all-lands",
     blockchain_get_history_for_land = "/api/blockchain/get-history-for-land",
+
+    blockchain_get_test = "/api/user/auth/test",
 }
