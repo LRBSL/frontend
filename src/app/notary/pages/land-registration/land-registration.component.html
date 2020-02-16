@@ -1,1 +1,330 @@
-<p>land-registration works!</p>
+<div *ngIf="isShowCard(0)" class="row" style="margin-bottom: 20px;">
+    <div class="col" style="margin-top: -10px;">
+        <div class="shadow card" style="margin: 15px;"><a class="btn btn-link text-left card-header font-weight-bold"
+                data-toggle="collapse" aria-expanded="true" aria-controls="collapse-11" href="#collapse-11"
+                role="button">Land Owner Verification</a>
+            <div class={{showHideCards(0)}} id="collapse-11">
+                <div class="form-group">
+                    <form [formGroup]="ownerVerifyForm" (ngSubmit)="submitOwnerVerify()">
+                        <div class="form-row" style="margin-top: 13px;">
+                            <div class="col-5 offset-1"><label>Land Owner NIC</label><input class="form-control"
+                                    type="text" name="nic" formControlName="nic"></div>
+                            <div class="col-5"><label>Land Deed Security Key</label><input class="form-control"
+                                    type="text" name="key" formControlName="key"></div>
+                        </div>
+                    </form>
+                </div>
+                <div class="card-footer text-center"><a class="btn btn-success btn-icon-split" role="button"
+                        style="margin-left: 10px;" (click)="submitOwnerVerify()"><span class="text-white-50 icon"><i
+                                class="fas fa-check"></i></span><span class="text-white text">Proceed To
+                            Next</span></a><a class="btn btn-secondary btn-icon-split" role="button"
+                        style="margin-left: 10px;" (click)="resetOwnerVerify()"><span class="text-white-50 icon"><i
+                                class="fas fa-arrow-right"></i></span><span class="text-white text">Clear
+                            Form</span></a><a class="btn btn-danger btn-icon-split" role="reset"
+                        style="margin-left: 10px;" (click)="resetOwnerVerify()"><span class="text-white-50 icon"><i
+                                class="fas fa-times"></i></span><span class="text-white text">Transaction
+                            Cancel</span></a></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div *ngIf="isShowSpinner(0)" class="row" style="margin-bottom: 20px;">
+    <div class="col text-center" style="margin-top: -10px;"><span class="spinner-border spinner-border-sm" role="status"
+            style="height: 40px;width: 40px;"></span></div>
+</div>
+<div *ngIf="landInformation != null && isShowCard(1) && !loading" class="row" style="margin-bottom: 20px;">
+    <div class="col" style="margin-top: -10px;">
+        <div class="shadow card" style="margin: 15px;"><a class="btn btn-link text-left card-header font-weight-bold"
+                data-toggle="collapse" aria-expanded="true" aria-controls="collapse-1" href="#collapse-1"
+                role="button">Land &amp; Information</a>
+            <div class={{showHideCards(1)}} id="collapse-1">
+                <div class="row" style="margin-top: 13px;">
+                    <div class="col text-center" style="margin-right: 10px;margin-left: 10px;"><label><strong>Land
+                                Information</strong></label>
+                        <div class="table-responsive table-bordered text-left">
+                            <table class="table table-bordered">
+                                <tbody>
+                                    <tr>
+                                        <td class="bg-light">RL Registry</td>
+                                        <td>{{landInformation.rlregistry}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="bg-light">Current Owner NIC</td>
+                                        <td>{{landInformation.current_owner_nic}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="bg-light">Extent</td>
+                                        <td>{{landInformation.extent}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="bg-light">Boundaries</td>
+                                        <td>{{landInformation.boundaries}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="bg-light">Last Registered Notary ID</td>
+                                        <td>{{landInformation.notary_vote}}</td>
+                                    </tr>
+                                    <tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col text-center" style="margin-right: 10px;margin-left: 10px;"><label><strong>Land Owner
+                                Information</strong></label>
+                        <div class="table-responsive table-bordered">
+                            <table class="table table-bordered">
+                                <tbody>
+                                    <tr>
+                                        <td class="bg-light">NIC No</td>
+                                        <td>{{ownerInformation.nic_no}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="bg-light">Name</td>
+                                        <td>{{ownerInformation.name}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="bg-light">Postal Address</td>
+                                        <td>{{ownerInformation.address}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="bg-light">Sex</td>
+                                        <td>{{ownerInformation.sex}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="bg-light">Registered Date</td>
+                                        <td>{{ownerInformation.regDate}}</td>
+                                    </tr>
+                                    <tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 18px;">
+                    <div class="col text-center" style="margin-right: 10px;margin-left: 10px;"><label><strong>Land Deed
+                                Information</strong></label>
+                        <div class="table-responsive table-bordered">
+                            <table class="table table-bordered">
+                                <tbody>
+                                    <tr>
+                                        <td>Cell 1</td>
+                                        <td>Cell 2</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Cell 3</td>
+                                        <td>Cell 4</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col text-center" style="margin-right: 10px;margin-left: 10px;"><label><strong>Land Plan
+                                Information</strong></label>
+                        <div class="table-responsive table-bordered">
+                            <table class="table table-bordered">
+                                <tbody>
+                                    <tr>
+                                        <td>Cell 1</td>
+                                        <td>Cell 2</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Cell 3</td>
+                                        <td>Cell 4</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer text-center"><a class="btn btn-success btn-icon-split" role="button"
+                        style="margin-left: 10px;"><span class="text-white-50 icon"><i
+                                class="fas fa-check"></i></span><span class="text-white text">Proceed To
+                            Next</span></a><a class="btn btn-secondary btn-icon-split" role="button"
+                        style="margin-left: 10px;"><span class="text-white-50 icon"><i
+                                class="fas fa-arrow-right"></i></span><span class="text-white text">Clear
+                            Form</span></a><a class="btn btn-danger btn-icon-split" role="button"
+                        style="margin-left: 10px;"><span class="text-white-50 icon"><i
+                                class="fas fa-times"></i></span><span class="text-white text">Transaction
+                            Cancel</span></a></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div *ngIf="isShowSpinner(1)" class="row" style="margin-bottom: 20px;">
+    <div class="col text-center" style="margin-top: -10px;"><span class="spinner-border spinner-border-sm" role="status"
+            style="height: 40px;width: 40px;"></span></div>
+</div>
+<div *ngIf="isShowCard(2)" class="row" style="margin-bottom: 20px;">
+    <div class="col" style="margin-top: -10px;">
+        <div class="shadow card" style="margin: 15px;"><a class="btn btn-link text-left card-header font-weight-bold"
+                data-toggle="collapse" aria-expanded="false" aria-controls="collapse-2" href="#collapse-1"
+                role="button">Land History Information</a>
+            <div class={{showHideCards(2)}} id="collapse-2">
+                <div class="row" style="margin-top: 13px;">
+                    <div class="col-3 mx-auto" style="margin-right: 10px;margin-left: 10px;">
+                        <div class="card shadow border-left-warning py-2">
+                            <div class="card-body">
+                                <div class="row align-items-center no-gutters">
+                                    <div class="col mr-2">
+                                        <div class="text-uppercase text-warning font-weight-bold text-xs mb-1">
+                                            <span>Land id : ##</span></div>
+                                        <div class="text-dark font-weight-bold h5 mb-0">
+                                            <label style="font-size: 12px;">Label</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-auto"><i class="fas fa-map-marked-alt fa-2x text-gray-300"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 13px;">
+                    <div class="col-3 mx-auto text-center" style="margin-right: 10px;margin-left: 10px;"><i
+                            class="fa fa-sort-up" style="font-size: 60px;"></i></div>
+                </div>
+                <div class="row" style="margin-top: 13px;">
+                    <div class="col-3 mx-auto" style="margin-right: 10px;margin-left: 10px;">
+                        <div class="card shadow border-left-warning py-2">
+                            <div class="card-body">
+                                <div class="row align-items-center no-gutters">
+                                    <div class="col mr-2">
+                                        <div class="text-uppercase text-warning font-weight-bold text-xs mb-1">
+                                            <span>Land id : ##</span></div>
+                                        <div class="text-dark font-weight-bold h5 mb-0">
+                                            <label style="font-size: 12px;">Label</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-auto"><i class="fas fa-map-marked-alt fa-2x text-gray-300"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer text-center"><a class="btn btn-success btn-icon-split" role="button"
+                        style="margin-left: 10px;"><span class="text-white-50 icon"><i
+                                class="fas fa-check"></i></span><span class="text-white text">Proceed To
+                            Next</span></a><a class="btn btn-secondary btn-icon-split" role="button"
+                        style="margin-left: 10px;"><span class="text-white-50 icon"><i
+                                class="fas fa-arrow-right"></i></span><span class="text-white text">Clear
+                            Form</span></a><a class="btn btn-danger btn-icon-split" role="button"
+                        style="margin-left: 10px;"><span class="text-white-50 icon"><i
+                                class="fas fa-times"></i></span><span class="text-white text">Transaction
+                            Cancel</span></a></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div *ngIf="isShowSpinner(2)" class="row" style="margin-bottom: 20px;">
+    <div class="col text-center" style="margin-top: -10px;"><span class="spinner-border spinner-border-sm" role="status"
+            style="height: 40px;width: 40px;"></span></div>
+</div>
+<div *ngIf="isShowCard(3)" class="row" style="margin-bottom: 20px;">
+    <div class="col" style="margin-top: -10px;">
+        <div class="shadow card" style="margin: 15px;"><a class="btn btn-link text-left card-header font-weight-bold"
+                data-toggle="collapse" aria-expanded="true" aria-controls="collapse-1" href="#collapse-1"
+                role="button">Land Buyer
+                Verification</a>
+            <div class={{showHideCards(3)}} id="collapse-1">
+                <div class="form-group">
+                    <form [formGroup]="buyerVerifyForm" (ngSubmit)="submitBuyerVerify()">
+                        <div class="form-row" style="margin-top: 13px;">
+                            <div class="col-6 offset-3"><label>Land Buyer NIC</label><input class="form-control"
+                                    type="text" name="nic" formControlName="nic"></div>
+                        </div>
+                    </form>
+                </div>
+                <div class="card-footer text-center"><a class="btn btn-success btn-icon-split" role="button"
+                        style="margin-left: 10px;"><span class="text-white-50 icon"><i
+                                class="fas fa-check"></i></span><span class="text-white text">Proceed To
+                            Next</span></a><a class="btn btn-secondary btn-icon-split" role="button"
+                        style="margin-left: 10px;"><span class="text-white-50 icon"><i
+                                class="fas fa-arrow-right"></i></span><span class="text-white text">Clear
+                            Form</span></a><a class="btn btn-danger btn-icon-split" role="button"
+                        style="margin-left: 10px;"><span class="text-white-50 icon"><i
+                                class="fas fa-times"></i></span><span class="text-white text">Transaction
+                            Cancel</span></a></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div *ngIf="isShowSpinner(3)" class="row" style="margin-bottom: 20px;">
+    <div class="col text-center" style="margin-top: -10px;"><span class="spinner-border spinner-border-sm" role="status"
+            style="height: 40px;width: 40px;"></span></div>
+</div>
+<div *ngIf="isShowCard(4)" class="row" style="margin-bottom: 20px;">
+    <div class="col" style="margin-top: -10px;">
+        <div class="shadow card" style="margin: 15px;"><a class="btn btn-link text-left card-header font-weight-bold"
+                data-toggle="collapse" aria-expanded="true" aria-controls="collapse-1" href="#collapse-1"
+                role="button">Land Buyer
+                Information</a>
+            <div class={{showHideCards(4)}} id="collapse-1">
+                <div class="row" style="margin-top: 13px;">
+                    <div class="col text-center" style="margin-right: 10px;margin-left: 10px;">
+                        <label><strong>Land Buyer
+                                Information</strong></label>
+                        <div class="table-responsive table-bordered">
+                            <table class="table table-bordered">
+                                <tbody>
+                                    <tr>
+                                        <td>Cell 1</td>
+                                        <td>Cell 2</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Cell 3</td>
+                                        <td>Cell 4</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer text-center"><a class="btn btn-success btn-icon-split" role="button"
+                        style="margin-left: 10px;"><span class="text-white-50 icon"><i
+                                class="fas fa-check"></i></span><span class="text-white text">Proceed To
+                            Next</span></a><a class="btn btn-secondary btn-icon-split" role="button"
+                        style="margin-left: 10px;"><span class="text-white-50 icon"><i
+                                class="fas fa-arrow-right"></i></span><span class="text-white text">Clear
+                            Form</span></a><a class="btn btn-danger btn-icon-split" role="button"
+                        style="margin-left: 10px;"><span class="text-white-50 icon"><i
+                                class="fas fa-times"></i></span><span class="text-white text">Transaction
+                            Cancel</span></a></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div *ngIf="isShowSpinner(4)" class="row" style="margin-bottom: 20px;">
+    <div class="col text-center" style="margin-top: -10px;"><span class="spinner-border spinner-border-sm" role="status"
+            style="height: 40px;width: 40px;"></span></div>
+</div>
+<div *ngIf="isShowCard(5)" class="row" style="margin-bottom: 20px;">
+    <div class="col" style="margin-top: -10px;">
+        <div class={{showHideCards(5)}} style="margin: 15px;"><a
+                class="btn btn-link text-left card-header font-weight-bold" data-toggle="collapse" aria-expanded="true"
+                aria-controls="collapse-1" href="#collapse-1" role="button">Land
+                Transaction Completion</a>
+            <div class="collapse show" id="collapse-1">
+                <div class="row" style="margin-top: 13px;">
+                    <div class="col-5 text-center mx-auto" style="margin-right: 10px;margin-left: 10px;">
+                        <ul class="list-group" style="margin-top: 10px;margin-bottom: 10px;">
+                            <li class="list-group-item"><span>Land Owner Verified</span></li>
+                            <li class="list-group-item"><span>List Group Item 2</span></li>
+                            <li class="list-group-item"><span>List Group Item 3</span></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card-footer text-center"><a class="btn btn-success btn-icon-split" role="button"
+                        style="margin-left: 10px;"><span class="text-white-50 icon"><i
+                                class="fas fa-check"></i></span><span class="text-white text">Commit The
+                            Transaction</span></a><a class="btn btn-secondary btn-icon-split" role="button"
+                        style="margin-left: 10px;"><span class="text-white-50 icon"><i
+                                class="fas fa-arrow-right"></i></span><span class="text-white text">Clear
+                            Form</span></a><a class="btn btn-danger btn-icon-split" role="button"
+                        style="margin-left: 10px;"><span class="text-white-50 icon"><i
+                                class="fas fa-times"></i></span><span class="text-white text">Transaction
+                            Cancel</span></a></div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -4,20 +4,18 @@ import { BackendURLS } from '../utils/backend-urls.enum';
 import { CookieService } from 'ngx-cookie-service';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
+import { NotaryRegister } from '../models/notary-register';
 
 export interface AuthUser {
-  id: number,
-  type: string,
-  email: string,
-  password: string
+  email?: string,
+  password?: string
 }
 
-export class User {
-  id: number;
-  type: string;
-  email: string;
-  regId: string;
-  password?: string;
+export interface User {
+  id?: number,
+  type?: string;
+  email?: string;
+  regId?: string;
   createdAt?: string;
   updatedAt?: string;
   firstName?: string;
@@ -43,7 +41,7 @@ export interface RegNotary {
 export class AuthService {
 
   _currentAuthUser: AuthUser;
-  currentUser: User = new User();
+  _currentUser: User;
 
   constructor(
     private httpResolverService: HttpResolverService,
@@ -56,6 +54,14 @@ export class AuthService {
 
   public set currentAuthUser(v: AuthUser) {
     this._currentAuthUser = v;
+  }
+
+  public get currentUser(): User {
+    return this._currentUser;
+  }
+
+  public set currentUser(v: User) {
+    this._currentUser = v;
   }
 
   public loginUserBackend() {
@@ -98,6 +104,11 @@ export class AuthService {
     }
   }
 
+  public getUserByNic(nic: string) {
+    return this.httpResolverService.realizarHttpPost(
+      BackendURLS.user_get_by_nic, { nic: nic });
+  }
+
   private delay(ms: number) {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
@@ -115,6 +126,17 @@ export class AuthService {
         reject(error);
       });
     });
+  }
+
+  // --------------------------------------------------------------
+  public registerNotaryUser(notary: NotaryRegister) {
+    return this.httpResolverService.realizarHttpPost(
+      BackendURLS.user_notary_register, notary);
+  }
+
+  public login(email: string, password: string) {
+    return this.httpResolverService.realizarHttpPost(
+      BackendURLS.user_login, { email: email, password: password });
   }
 
 }

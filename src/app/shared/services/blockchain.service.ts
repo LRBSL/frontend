@@ -29,13 +29,25 @@ export class BlockchainService {
 
   getAllLands() {
     return this.httpResolverService.realizarHttpPost(
-      BackendURLS.blockchain_query_all_lands, { }
+      BackendURLS.blockchain_query_all_lands, {}
     );
   }
 
   getHistoryForLand(id: string) {
     return this.httpResolverService.realizarHttpPost(
       BackendURLS.blockchain_get_history_for_land, { id: id }
+    );
+  }
+
+  getLandIdByKeyAndNic(nic: string, key: string) {
+    return this.httpResolverService.realizarHttpPost(
+      BackendURLS.land_get_id_by_key_nic, { nic: nic, key: key }
+    );
+  }
+
+  getDeedByLandId(landId: string) {
+    return this.httpResolverService.realizarHttpPost(
+      BackendURLS.land_get_deed, { landId: landId }
     );
   }
 
