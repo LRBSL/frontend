@@ -7,24 +7,27 @@ import { Router } from '@angular/router';
 import { NotaryRegister } from '../models/notary-register';
 
 export interface AuthUser {
+  type?: string,
   email?: string,
   password?: string
 }
 
 export interface User {
-  id?: number,
-  type?: string;
-  email?: string;
-  regId?: string;
-  createdAt?: string;
-  updatedAt?: string;
-  firstName?: string;
-  lastName?: string;
-  nic?: string;
-  contact?: string;
-  postalAddress?: string;
-  lastLogin?: string;
-  isActive?: boolean;
+  id?: string,
+  type?: string,
+  email?: string,
+  registeredId?: string,
+  createdAt?: string,
+  updatedAt?: string,
+  firstName?: string,
+  lastName?: string,
+  publicName?:string,
+  nic?: string,
+  contactNo?: string,
+  postalAddress?: string,
+  lastLogin?: string,
+  isActive?: boolean,
+  registeredAt?: string
 }
 
 export interface RegNotary {
@@ -98,8 +101,8 @@ export class AuthService {
     await this.delay(600);
   }
 
-  public checkCurrentUserExist() {
-    if (this.currentUser == null) {
+  public checkCurrentUserExist(type: string) {
+    if (this.currentUser == null || this.currentUser.type != type) {
       this.router.navigate(["/lrbsl"]);
     }
   }
@@ -137,6 +140,11 @@ export class AuthService {
   public login(email: string, password: string) {
     return this.httpResolverService.realizarHttpPost(
       BackendURLS.user_login, { email: email, password: password });
+  }
+
+  public getRLRUserInfo(id: string) {
+    return this.httpResolverService.realizarHttpPost(
+      BackendURLS.user_getinfo_rlr, { id: id });
   }
 
 }

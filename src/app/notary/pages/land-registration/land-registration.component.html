@@ -35,9 +35,9 @@
 <div *ngIf="landInformation != null && isShowCard(1) && !loading" class="row" style="margin-bottom: 20px;">
     <div class="col" style="margin-top: -10px;">
         <div class="shadow card" style="margin: 15px;"><a class="btn btn-link text-left card-header font-weight-bold"
-                data-toggle="collapse" aria-expanded="true" aria-controls="collapse-1" href="#collapse-1"
+                data-toggle="collapse" aria-expanded="true" aria-controls="collapse-12" href="#collapse-12"
                 role="button">Land &amp; Information</a>
-            <div class={{showHideCards(1)}} id="collapse-1">
+            <div class={{showHideCards(1)}} id="collapse-12">
                 <div class="row" style="margin-top: 13px;">
                     <div class="col text-center" style="margin-right: 10px;margin-left: 10px;"><label><strong>Land
                                 Information</strong></label>
@@ -64,7 +64,6 @@
                                         <td class="bg-light">Last Registered Notary ID</td>
                                         <td>{{landInformation.notary_vote}}</td>
                                     </tr>
-                                    <tr>
                                 </tbody>
                             </table>
                         </div>
@@ -87,14 +86,13 @@
                                         <td>{{ownerInformation.address}}</td>
                                     </tr>
                                     <tr>
-                                        <td class="bg-light">Sex</td>
+                                        <td class="bg-light">Gender</td>
                                         <td>{{ownerInformation.sex}}</td>
                                     </tr>
                                     <tr>
                                         <td class="bg-light">Registered Date</td>
                                         <td>{{ownerInformation.regDate}}</td>
                                     </tr>
-                                    <tr>
                                 </tbody>
                             </table>
                         </div>
@@ -107,12 +105,20 @@
                             <table class="table table-bordered">
                                 <tbody>
                                     <tr>
-                                        <td>Cell 1</td>
-                                        <td>Cell 2</td>
+                                        <td class="bg-light">Deed ID</td>
+                                        <td>{{deedInformation.id}}</td>
                                     </tr>
                                     <tr>
-                                        <td>Cell 3</td>
-                                        <td>Cell 4</td>
+                                        <td class="bg-light">Deed Type</td>
+                                        <td>{{deedInformation.type}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="bg-light">Registered Notary</td>
+                                        <td>{{deedInformation.registeredNotary}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="bg-light">Registered At</td>
+                                        <td>{{deedInformation.registeredAt}}</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -124,12 +130,16 @@
                             <table class="table table-bordered">
                                 <tbody>
                                     <tr>
-                                        <td>Cell 1</td>
-                                        <td>Cell 2</td>
+                                        <td class="bg-light">Plan ID</td>
+                                        <td>{{planInformation.id}}</td>
                                     </tr>
                                     <tr>
-                                        <td>Cell 3</td>
-                                        <td>Cell 4</td>
+                                        <td class="bg-light">Registered Surveyor</td>
+                                        <td>{{planInformation.registeredSurveyor}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="bg-light">Registered At</td>
+                                        <td>{{planInformation.registeredAt}}</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -137,7 +147,7 @@
                     </div>
                 </div>
                 <div class="card-footer text-center"><a class="btn btn-success btn-icon-split" role="button"
-                        style="margin-left: 10px;"><span class="text-white-50 icon"><i
+                        style="margin-left: 10px;" (click)="submitLandInformation()"><span class="text-white-50 icon"><i
                                 class="fas fa-check"></i></span><span class="text-white text">Proceed To
                             Next</span></a><a class="btn btn-secondary btn-icon-split" role="button"
                         style="margin-left: 10px;"><span class="text-white-50 icon"><i
@@ -154,56 +164,46 @@
     <div class="col text-center" style="margin-top: -10px;"><span class="spinner-border spinner-border-sm" role="status"
             style="height: 40px;width: 40px;"></span></div>
 </div>
-<div *ngIf="isShowCard(2)" class="row" style="margin-bottom: 20px;">
+<div *ngIf="histRecords.length != 0 && isShowCard(2) && !loading" class="row" style="margin-bottom: 20px;">
     <div class="col" style="margin-top: -10px;">
         <div class="shadow card" style="margin: 15px;"><a class="btn btn-link text-left card-header font-weight-bold"
-                data-toggle="collapse" aria-expanded="false" aria-controls="collapse-2" href="#collapse-1"
+                data-toggle="collapse" aria-expanded="false" aria-controls="collapse-13" href="#collapse-13"
                 role="button">Land History Information</a>
-            <div class={{showHideCards(2)}} id="collapse-2">
-                <div class="row" style="margin-top: 13px;">
-                    <div class="col-3 mx-auto" style="margin-right: 10px;margin-left: 10px;">
-                        <div class="card shadow border-left-warning py-2">
-                            <div class="card-body">
-                                <div class="row align-items-center no-gutters">
-                                    <div class="col mr-2">
-                                        <div class="text-uppercase text-warning font-weight-bold text-xs mb-1">
-                                            <span>Land id : ##</span></div>
-                                        <div class="text-dark font-weight-bold h5 mb-0">
-                                            <label style="font-size: 12px;">Label</label>
+            <div class={{showHideCards(2)}} id="collapse-13">
+
+                <div *ngFor="let rec of histRecords;let last = last; let i = index">
+                    <div class="row" style="margin-top: 13px;">
+                        <div class="col-5 mx-auto" style="margin-right: 10px;margin-left: 10px;">
+                            <div class="card shadow border-left-warning py-2">
+                                <div class="card-body">
+                                    <div class="row align-items-center no-gutters">
+                                        <div class="col mr-2">
+                                            <div class="text-uppercase text-warning font-weight-bold text-xs mb-1">
+                                                <span>Record ID : {{rec.txId}}</span></div>
+                                            <div class="text-dark font-weight-bold h5 mb-0">
+                                                <label style="font-size: 12px;">Timestamp :</label><i
+                                                    style="font-size: 12px;">{{rec.timestamp}}</i><br>
+                                                <label style="font-size: 12px;">Parent Land ID :</label><i
+                                                    style="font-size: 12px;">{{rec.record.parent_land}}</i><br>
+                                                <label style="font-size: 12px;">Owner NIC :</label><i
+                                                    style="font-size: 12px;">{{rec.record.current_owner}}</i>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-auto"><i class="fas fa-map-marked-alt fa-2x text-gray-300"></i>
+                                        <div class="col-auto"><i class="fas fa-map-marked-alt fa-2x text-gray-300"></i>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="row" style="margin-top: 13px;">
-                    <div class="col-3 mx-auto text-center" style="margin-right: 10px;margin-left: 10px;"><i
-                            class="fa fa-sort-up" style="font-size: 60px;"></i></div>
-                </div>
-                <div class="row" style="margin-top: 13px;">
-                    <div class="col-3 mx-auto" style="margin-right: 10px;margin-left: 10px;">
-                        <div class="card shadow border-left-warning py-2">
-                            <div class="card-body">
-                                <div class="row align-items-center no-gutters">
-                                    <div class="col mr-2">
-                                        <div class="text-uppercase text-warning font-weight-bold text-xs mb-1">
-                                            <span>Land id : ##</span></div>
-                                        <div class="text-dark font-weight-bold h5 mb-0">
-                                            <label style="font-size: 12px;">Label</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-auto"><i class="fas fa-map-marked-alt fa-2x text-gray-300"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="row" style="margin-top: 13px;" *ngIf="histRecords[i]!=last">
+                        <div class="col-3 mx-auto text-center" style="margin-right: 10px;margin-left: 10px;"><i
+                                class="fa fa-sort-up" style="font-size: 60px;"></i></div>
                     </div>
                 </div>
+
                 <div class="card-footer text-center"><a class="btn btn-success btn-icon-split" role="button"
-                        style="margin-left: 10px;"><span class="text-white-50 icon"><i
+                        style="margin-left: 10px;" (click)="submitLandHistory()"><span class="text-white-50 icon"><i
                                 class="fas fa-check"></i></span><span class="text-white text">Proceed To
                             Next</span></a><a class="btn btn-secondary btn-icon-split" role="button"
                         style="margin-left: 10px;"><span class="text-white-50 icon"><i
@@ -223,10 +223,10 @@
 <div *ngIf="isShowCard(3)" class="row" style="margin-bottom: 20px;">
     <div class="col" style="margin-top: -10px;">
         <div class="shadow card" style="margin: 15px;"><a class="btn btn-link text-left card-header font-weight-bold"
-                data-toggle="collapse" aria-expanded="true" aria-controls="collapse-1" href="#collapse-1"
+                data-toggle="collapse" aria-expanded="true" aria-controls="collapse-14" href="#collapse-14"
                 role="button">Land Buyer
                 Verification</a>
-            <div class={{showHideCards(3)}} id="collapse-1">
+            <div class={{showHideCards(3)}} id="collapse-14">
                 <div class="form-group">
                     <form [formGroup]="buyerVerifyForm" (ngSubmit)="submitBuyerVerify()">
                         <div class="form-row" style="margin-top: 13px;">
@@ -236,8 +236,9 @@
                     </form>
                 </div>
                 <div class="card-footer text-center"><a class="btn btn-success btn-icon-split" role="button"
-                        style="margin-left: 10px;"><span class="text-white-50 icon"><i
-                                class="fas fa-check"></i></span><span class="text-white text">Proceed To
+                        style="margin-left: 10px;" (click)="submitBuyerVerification()"><span
+                            class="text-white-50 icon"><i class="fas fa-check"></i></span><span
+                            class="text-white text">Proceed To
                             Next</span></a><a class="btn btn-secondary btn-icon-split" role="button"
                         style="margin-left: 10px;"><span class="text-white-50 icon"><i
                                 class="fas fa-arrow-right"></i></span><span class="text-white text">Clear
@@ -253,13 +254,13 @@
     <div class="col text-center" style="margin-top: -10px;"><span class="spinner-border spinner-border-sm" role="status"
             style="height: 40px;width: 40px;"></span></div>
 </div>
-<div *ngIf="isShowCard(4)" class="row" style="margin-bottom: 20px;">
+<div *ngIf="buyerInformation != null && isShowCard(4) && !loading" class="row" style="margin-bottom: 20px;">
     <div class="col" style="margin-top: -10px;">
         <div class="shadow card" style="margin: 15px;"><a class="btn btn-link text-left card-header font-weight-bold"
-                data-toggle="collapse" aria-expanded="true" aria-controls="collapse-1" href="#collapse-1"
+                data-toggle="collapse" aria-expanded="true" aria-controls="collapse-15" href="#collapse-15"
                 role="button">Land Buyer
                 Information</a>
-            <div class={{showHideCards(4)}} id="collapse-1">
+            <div class={{showHideCards(4)}} id="collapse-15">
                 <div class="row" style="margin-top: 13px;">
                     <div class="col text-center" style="margin-right: 10px;margin-left: 10px;">
                         <label><strong>Land Buyer
@@ -268,12 +269,24 @@
                             <table class="table table-bordered">
                                 <tbody>
                                     <tr>
-                                        <td>Cell 1</td>
-                                        <td>Cell 2</td>
+                                        <td class="bg-light">NIC No</td>
+                                        <td>{{buyerInformation.no}}</td>
                                     </tr>
                                     <tr>
-                                        <td>Cell 3</td>
-                                        <td>Cell 4</td>
+                                        <td class="bg-light">Name</td>
+                                        <td>{{buyerInformation.name}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="bg-light">Postal Address</td>
+                                        <td>{{buyerInformation.postalAddress}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="bg-light">Gender</td>
+                                        <td>{{buyerInformation.gender}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="bg-light">Registered Date</td>
+                                        <td>{{buyerInformation.registeredDate}}</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -281,8 +294,9 @@
                     </div>
                 </div>
                 <div class="card-footer text-center"><a class="btn btn-success btn-icon-split" role="button"
-                        style="margin-left: 10px;"><span class="text-white-50 icon"><i
-                                class="fas fa-check"></i></span><span class="text-white text">Proceed To
+                        style="margin-left: 10px;" (click)="submitBuyerInformation()"><span
+                            class="text-white-50 icon"><i class="fas fa-check"></i></span><span
+                            class="text-white text">Proceed To
                             Next</span></a><a class="btn btn-secondary btn-icon-split" role="button"
                         style="margin-left: 10px;"><span class="text-white-50 icon"><i
                                 class="fas fa-arrow-right"></i></span><span class="text-white text">Clear
@@ -302,20 +316,23 @@
     <div class="col" style="margin-top: -10px;">
         <div class={{showHideCards(5)}} style="margin: 15px;"><a
                 class="btn btn-link text-left card-header font-weight-bold" data-toggle="collapse" aria-expanded="true"
-                aria-controls="collapse-1" href="#collapse-1" role="button">Land
+                aria-controls="collapse-16" href="#collapse-16" role="button">Land
                 Transaction Completion</a>
-            <div class="collapse show" id="collapse-1">
+            <div class="collapse show" id="collapse-16">
                 <div class="row" style="margin-top: 13px;">
                     <div class="col-5 text-center mx-auto" style="margin-right: 10px;margin-left: 10px;">
                         <ul class="list-group" style="margin-top: 10px;margin-bottom: 10px;">
-                            <li class="list-group-item"><span>Land Owner Verified</span></li>
-                            <li class="list-group-item"><span>List Group Item 2</span></li>
-                            <li class="list-group-item"><span>List Group Item 3</span></li>
+                            <li class="list-group-item"><span>Land Owner Verified</span><span
+                                    class="text-white-50 icon"><i class="fas fa-arrow-right"></i></span></li>
+                            <li class="list-group-item"><span>Land Information Verified</span><span
+                                    class="text-white-50 icon"><i class="fas fa-arrow-right"></i></span></li>
+                            <li class="list-group-item"><span>Buyer Verified</span><span
+                                    class="text-white-50 icon"><i class="fas fa-arrow-right"></i></span></li>
                         </ul>
                     </div>
                 </div>
                 <div class="card-footer text-center"><a class="btn btn-success btn-icon-split" role="button"
-                        style="margin-left: 10px;"><span class="text-white-50 icon"><i
+                        style="margin-left: 10px;" (click)="submitCommitTransaction()"><span class="text-white-50 icon"><i
                                 class="fas fa-check"></i></span><span class="text-white text">Commit The
                             Transaction</span></a><a class="btn btn-secondary btn-icon-split" role="button"
                         style="margin-left: 10px;"><span class="text-white-50 icon"><i
@@ -328,3 +345,5 @@
         </div>
     </div>
 </div>
+
+<app-alert-box [type]="alert_type" [content]="alert_content"></app-alert-box>

@@ -25,19 +25,19 @@ export class LoginComponent implements OnInit {
     {
       userId: 0,
       userType: "Regional Land Registry",
-      userTypeForBack: "rlr",
+      userTypeForBack: "r",
       userDescription: "manage land transactions based on region, manage notary employees, etc"
     },
     {
       userId: 1,
       userType: "Notary",
-      userTypeForBack: "notary",
+      userTypeForBack: "n",
       userDescription: "execute land transactions, check lands information, etc"
     },
     {
       userId: 2,
       userType: "Surveyor",
-      userTypeForBack: "surveyor",
+      userTypeForBack: "s",
       userDescription: "verify plan information, check lands information, etc"
     },
   ];
@@ -78,6 +78,7 @@ export class LoginComponent implements OnInit {
   submitLogin() {
     if (this.loginForm.valid) {
       this.authService.currentAuthUser = {
+        type: this.currentUser.userTypeForBack,
         email: this.loginForm.controls.email.value,
         password: this.loginForm.controls.password.value
       };

@@ -30,6 +30,9 @@ export class LoadingPageComponent implements OnInit, OnDestroy {
     this.tripleDotAnimation();
     this.p1(this.authService.currentAuthUser.email, this.authService.currentAuthUser.password).then((res: any) => {
       if (res.success) {
+        if(this.authService.currentAuthUser.type != res.data.type) {
+          throw new Error();
+        }
         let user = res.data;
         this.authService.currentUser = {
           id: user.id,
