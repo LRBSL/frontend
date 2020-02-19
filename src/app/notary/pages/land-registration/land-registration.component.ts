@@ -107,6 +107,7 @@ export class LandRegistrationComponent implements OnInit, OnDestroy {
     this.subS4.unsubscribe();
   }
 
+  // first card submit method
   async submitOwnerVerify() {
     if (this.ownerVerifyForm.valid) {
       this.loading = true;
@@ -144,6 +145,7 @@ export class LandRegistrationComponent implements OnInit, OnDestroy {
     }
   }
 
+  // promise for first card
   p1 = (nic: string, key: string) => {
     return new Promise((resolve, reject) => {
       this.subS1 = this.blockchainService.ownerVerification(nic, key).subscribe((res: any) => {
@@ -154,6 +156,7 @@ export class LandRegistrationComponent implements OnInit, OnDestroy {
     })
   }
 
+  // second card submit method
   async submitLandInformation() {
     this.loading = true;
     this.histRecords = [];
@@ -181,6 +184,7 @@ export class LandRegistrationComponent implements OnInit, OnDestroy {
       });
   }
 
+  // promise for second card
   p2 = (id: string) => {
     return new Promise((resolve, reject) => {
       this.subS1 = this.blockchainService.getHistoryForLand(id).subscribe((res: any) => {
@@ -266,22 +270,26 @@ export class LandRegistrationComponent implements OnInit, OnDestroy {
     this.buyerVerifyForm.reset();
   }
 
-  stopTransaction() {
+  // transaction cancel menthod
+  cancelTransaction() {
     this.ownerVerifyForm.reset();
     this.buyerVerifyForm.reset();
     this.currentStep = 0;
     this.loading = false;
   }
 
+  // check collapse
   showHideCards(num: number) {
     if (num == this.currentStep) return "collapse show";
-    else return "collapse";
+    else return "collapse disabledbutton";
   }
 
+  // check card state
   isShowCard(num: number) {
     return num <= this.currentStep;
   }
 
+  // check spinner state
   isShowSpinner(num: number) {
     return num == this.currentStep && this.loading;
   }

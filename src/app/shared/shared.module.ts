@@ -12,6 +12,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { NotarySideBarComponent } from './components/notary-side-bar/notary-side-bar.component';
 import { SurveyorSideBarComponent } from './components/surveyor-side-bar/surveyor-side-bar.component';
 import { AlertBoxComponent } from './components/alert-box/alert-box.component';
+import { TreeBoxComponent } from './components/tree-box/tree-box.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { AlertBoxComponent } from './components/alert-box/alert-box.component';
     SysFooterComponent,
     NotarySideBarComponent,
     SurveyorSideBarComponent,
-    AlertBoxComponent
+    AlertBoxComponent,
+    TreeBoxComponent
   ],
   imports: [
     CommonModule, RouterModule, HttpClientModule
@@ -39,7 +41,8 @@ import { AlertBoxComponent } from './components/alert-box/alert-box.component';
     SysFooterComponent,
     NotarySideBarComponent,
     SurveyorSideBarComponent,
-    AlertBoxComponent
+    AlertBoxComponent,
+    TreeBoxComponent
   ]
 })
 export class SharedModule { }

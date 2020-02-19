@@ -36,7 +36,10 @@
                 "inject": false
               }
             ],
-            "scripts": ["./node_modules/jquery/dist/jquery.min.js"]
+            "scripts": [
+              "./node_modules/jquery/dist/jquery.min.js",
+              "./node_modules/d3/dist/d3.min.js"
+            ]
           },
           "configurations": {
             "production": {

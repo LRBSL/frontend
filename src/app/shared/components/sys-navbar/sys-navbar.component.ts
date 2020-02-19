@@ -10,12 +10,15 @@ import { CommonService } from '../../services/common.service';
 })
 export class SysNavbarComponent implements OnInit {
 
+  regId: string;
+
   constructor(
-    private authService: AuthService, 
+    private authService: AuthService,
     private router: Router,
     private commonService: CommonService) { }
 
   ngOnInit() {
+    this.regId = this.authService.currentUser.registeredId;
   }
 
   async userLogout() {

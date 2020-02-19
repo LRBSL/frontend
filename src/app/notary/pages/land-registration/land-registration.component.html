@@ -1,6 +1,19 @@
 <div *ngIf="isShowCard(0)" class="row" style="margin-bottom: 20px;">
     <div class="col" style="margin-top: -10px;">
         <div class="shadow card" style="margin: 15px;"><a class="btn btn-link text-left card-header font-weight-bold"
+                data-toggle="collapse" aria-expanded="true" aria-controls="collapse-10" href="#collapse-10"
+                role="button">Testing</a>
+            <div class="collapse show" id="collapse-10">
+                <app-tree-box></app-tree-box>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- land owner verification card -->
+<div *ngIf="isShowCard(0)" class="row" style="margin-bottom: 20px;">
+    <div class="col" style="margin-top: -10px;">
+        <div class="shadow card" style="margin: 15px;"><a class="btn btn-link text-left card-header font-weight-bold"
                 data-toggle="collapse" aria-expanded="true" aria-controls="collapse-11" href="#collapse-11"
                 role="button">Land Owner Verification</a>
             <div class={{showHideCards(0)}} id="collapse-11">
@@ -21,7 +34,7 @@
                         style="margin-left: 10px;" (click)="resetOwnerVerify()"><span class="text-white-50 icon"><i
                                 class="fas fa-arrow-right"></i></span><span class="text-white text">Clear
                             Form</span></a><a class="btn btn-danger btn-icon-split" role="reset"
-                        style="margin-left: 10px;" (click)="resetOwnerVerify()"><span class="text-white-50 icon"><i
+                        style="margin-left: 10px;" (click)="cancelTransaction()"><span class="text-white-50 icon"><i
                                 class="fas fa-times"></i></span><span class="text-white text">Transaction
                             Cancel</span></a></div>
             </div>
@@ -32,7 +45,10 @@
     <div class="col text-center" style="margin-top: -10px;"><span class="spinner-border spinner-border-sm" role="status"
             style="height: 40px;width: 40px;"></span></div>
 </div>
-<div *ngIf="landInformation != null && isShowCard(1) && !loading" class="row" style="margin-bottom: 20px;">
+
+<!-- land information card -->
+<div *ngIf="landInformation != null && ownerInformation !=null && deedInformation != null && planInformation != null && isShowCard(1)"
+    class="row" style="margin-bottom: 20px;">
     <div class="col" style="margin-top: -10px;">
         <div class="shadow card" style="margin: 15px;"><a class="btn btn-link text-left card-header font-weight-bold"
                 data-toggle="collapse" aria-expanded="true" aria-controls="collapse-12" href="#collapse-12"
@@ -149,11 +165,8 @@
                 <div class="card-footer text-center"><a class="btn btn-success btn-icon-split" role="button"
                         style="margin-left: 10px;" (click)="submitLandInformation()"><span class="text-white-50 icon"><i
                                 class="fas fa-check"></i></span><span class="text-white text">Proceed To
-                            Next</span></a><a class="btn btn-secondary btn-icon-split" role="button"
-                        style="margin-left: 10px;"><span class="text-white-50 icon"><i
-                                class="fas fa-arrow-right"></i></span><span class="text-white text">Clear
-                            Form</span></a><a class="btn btn-danger btn-icon-split" role="button"
-                        style="margin-left: 10px;"><span class="text-white-50 icon"><i
+                            Next</span></a><a class="btn btn-danger btn-icon-split" role="button"
+                        style="margin-left: 10px;" (click)="cancelTransaction()"><span class="text-white-50 icon"><i
                                 class="fas fa-times"></i></span><span class="text-white text">Transaction
                             Cancel</span></a></div>
             </div>
@@ -164,7 +177,9 @@
     <div class="col text-center" style="margin-top: -10px;"><span class="spinner-border spinner-border-sm" role="status"
             style="height: 40px;width: 40px;"></span></div>
 </div>
-<div *ngIf="histRecords.length != 0 && isShowCard(2) && !loading" class="row" style="margin-bottom: 20px;">
+
+<!-- land history card -->
+<div *ngIf="histRecords.length != 0 && isShowCard(2)" class="row" style="margin-bottom: 20px;">
     <div class="col" style="margin-top: -10px;">
         <div class="shadow card" style="margin: 15px;"><a class="btn btn-link text-left card-header font-weight-bold"
                 data-toggle="collapse" aria-expanded="false" aria-controls="collapse-13" href="#collapse-13"
@@ -220,6 +235,7 @@
     <div class="col text-center" style="margin-top: -10px;"><span class="spinner-border spinner-border-sm" role="status"
             style="height: 40px;width: 40px;"></span></div>
 </div>
+
 <div *ngIf="isShowCard(3)" class="row" style="margin-bottom: 20px;">
     <div class="col" style="margin-top: -10px;">
         <div class="shadow card" style="margin: 15px;"><a class="btn btn-link text-left card-header font-weight-bold"
@@ -326,14 +342,15 @@
                                     class="text-white-50 icon"><i class="fas fa-arrow-right"></i></span></li>
                             <li class="list-group-item"><span>Land Information Verified</span><span
                                     class="text-white-50 icon"><i class="fas fa-arrow-right"></i></span></li>
-                            <li class="list-group-item"><span>Buyer Verified</span><span
-                                    class="text-white-50 icon"><i class="fas fa-arrow-right"></i></span></li>
+                            <li class="list-group-item"><span>Buyer Verified</span><span class="text-white-50 icon"><i
+                                        class="fas fa-arrow-right"></i></span></li>
                         </ul>
                     </div>
                 </div>
                 <div class="card-footer text-center"><a class="btn btn-success btn-icon-split" role="button"
-                        style="margin-left: 10px;" (click)="submitCommitTransaction()"><span class="text-white-50 icon"><i
-                                class="fas fa-check"></i></span><span class="text-white text">Commit The
+                        style="margin-left: 10px;" (click)="submitCommitTransaction()"><span
+                            class="text-white-50 icon"><i class="fas fa-check"></i></span><span
+                            class="text-white text">Commit The
                             Transaction</span></a><a class="btn btn-secondary btn-icon-split" role="button"
                         style="margin-left: 10px;"><span class="text-white-50 icon"><i
                                 class="fas fa-arrow-right"></i></span><span class="text-white text">Clear

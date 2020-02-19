@@ -1,0 +1,5 @@
+#tree-box {
+    height: 400px;
+    width: auto;
+    overflow: scroll;
+}

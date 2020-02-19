@@ -13,10 +13,11 @@ export class LayoutComponent implements OnInit {
   constructor(
     @Inject(DOCUMENT) private document: Document,
     private commonService: CommonService,
-    private authService: AuthService) { }
+    private authService: AuthService) {
+      this.commonService.loadStyle(this.document, 'bootstrap-theme', "assets/bootstrap/css/bootstrap-rlr.min.css");
+    }
 
   ngOnInit() {
-    this.commonService.loadStyle(this.document, 'bootstrap-theme', "assets/bootstrap/css/bootstrap-rlr.min.css");
     // this.authService.checkCurrentUserExist();
   }
 
