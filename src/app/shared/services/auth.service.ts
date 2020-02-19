@@ -16,12 +16,13 @@ export interface User {
   id?: string,
   type?: string,
   email?: string,
+  password?: string,
   registeredId?: string,
   createdAt?: string,
   updatedAt?: string,
   firstName?: string,
   lastName?: string,
-  publicName?:string,
+  publicName?: string,
   nic?: string,
   contactNo?: string,
   postalAddress?: string,
@@ -145,6 +146,22 @@ export class AuthService {
   public getRLRUserInfo(id: string) {
     return this.httpResolverService.realizarHttpPost(
       BackendURLS.user_getinfo_rlr, { id: id });
+  }
+
+  // ##############################################################3
+  public registerRLR(user: User) {
+    let rlrUser = {
+      email: user.email,
+      password: user.password,
+      userinfo: {
+        registeredID: user.registeredId,
+        publicName: user.publicName,
+        contactNo: user.contactNo,
+        postalAddress: user.postalAddress
+      }
+    }
+    return this.httpResolverService.realizarHttpPost(
+      BackendURLS.user_rlr_register, rlrUser);
   }
 
 }

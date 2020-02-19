@@ -1,25 +1,17 @@
 <div class="row register-form">
     <div class="col-md-8 offset-md-2">
-        <form [formGroup]="notaryRegisterForm" (ngSubmit)="submitRegister()" class="card shadow custom-form">
-            <h1 style="margin-right: 40px;margin-left: 40px;">Notary Register Form</h1>
+        <form [formGroup]="rlrRegisterForm" (ngSubmit)="submitRegister()" class="card shadow custom-form">
+            <h1 style="margin-right: 40px;margin-left: 40px;">RLR Register Form</h1>
             <div class="form-row form-group">
-                <div class="col-sm-4 label-column"><label class="col-form-label" for="fname-input-field">First Name
-                    </label></div>
+                <div class="col-sm-4 label-column"><label class="col-form-label" for="email-input-field">Email
+                        Address</label></div>
                 <div class="col-sm-6 input-column">
-                    <input class="form-control" type="text" name="fname" formControlName="fname">
+                    <input class="form-control" type="email" name="email" formControlName="email">
                 </div>
             </div>
             <div class="form-row form-group">
-                <div class="col-sm-4 label-column"><label class="col-form-label" for="lname-input-field">Last
-                        Name</label></div>
-                <div class="col-sm-6 input-column">
-                    <input class="form-control" type="text" name="lname" formControlName="lname">
-                </div>
-            </div>
-            <div class="form-row form-group">
-                <div class="col-sm-4 label-column"><label class="col-form-label" for="nic-input-field">NIC</label></div>
-                <div class="col-sm-6 input-column">
-                    <input class="form-control" type="text" name="nic" formControlName="nic">
+                <div class="text-center">
+                    ( Initial password is same to Email Address. You can change it whenever you need )
                 </div>
             </div>
             <div class="form-row form-group">
@@ -30,12 +22,27 @@
                 </div>
             </div>
             <div class="form-row form-group">
-                <div class="col-sm-4 label-column"><label class="col-form-label" for="email-input-field">Email
+                <div class="col-sm-4 label-column"><label class="col-form-label" for="nic-input-field">Public
+                        Name</label></div>
+                <div class="col-sm-6 input-column">
+                    <input class="form-control" type="text" name="publicName" formControlName="publicName">
+                </div>
+            </div>
+            <div class="form-row form-group">
+                <div class="col-sm-4 label-column"><label class="col-form-label" for="lname-input-field">Contact
+                        No</label></div>
+                <div class="col-sm-6 input-column">
+                    <input class="form-control" type="text" name="contactNo" formControlName="contactNo">
+                </div>
+            </div>
+            <div class="form-row form-group">
+                <div class="col-sm-4 label-column"><label class="col-form-label" for="lname-input-field">Postal
                         Address</label></div>
                 <div class="col-sm-6 input-column">
-                    <input class="form-control" type="email" name="email" formControlName="email">
+                    <input class="form-control" type="text" name="postalAddress" formControlName="postalAddress">
                 </div>
-            </div><button class="btn btn-light submit-button" type="submit">Submit</button>
+            </div>
+            <button class="btn btn-light submit-button" type="submit">Submit</button>
         </form>
     </div>
 </div>
