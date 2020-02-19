@@ -1,6 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import * as d3 from 'd3';
-import { hierarchy, tree } from 'd3-hierarchy'
+
+export interface TreeData {
+  name: string,
+  children: TreeData[],
+  data: {
+    owner: string,
+    owner_nic: string,
+    extent: number,
+    surveyor_id: string,
+    notary_id: string,
+  },
+  timestamp: number
+}
 
 @Component({
   selector: 'app-tree-box',
@@ -9,69 +21,9 @@ import { hierarchy, tree } from 'd3-hierarchy'
 })
 export class TreeBoxComponent implements OnInit {
 
-  constructor() { }
+  @Input() treeData: TreeData;
 
-  treeData =
-    {
-      "name": "Top Level",
-      "children": [
-        {
-          "name": "Level 2: A",
-          "children": [
-            {
-              "name": "Son of A",
-              "children": [
-                {
-                  "name": "Top Level",
-                  "children": [],
-                  "data": {
-                    "txId": 123123123,
-                    "owner": "gdfdfgs"
-                  }
-                }
-              ],
-              "data": {
-                "txId": 524324234,
-                "owner": "gdfdfgs"
-              }
-            },
-            {
-              "name": "Daughter of A",
-              "children": [
-                {
-                  "name": "Top Level",
-                  "children": [],
-                  "data": {
-                    "txId": 123123123,
-                    "owner": "gdfdfgs"
-                  }
-                }
-              ],
-              "data": {
-                "txId": 524324234,
-                "owner": "gdfdfgs"
-              }
-            }
-          ],
-          "data": {
-            "txId": 524324234,
-            "owner": "gdfdfgs"
-          }
-        },
-        {
-          "name": "Level 2: B",
-          "children": [],
-          "data": {
-            "txId": 524324234,
-            "owner": "gdfdfgs"
-          }
-        }
-      ],
-      "data": {
-        "txId": 123123123,
-        "owner": "gdfdfgs"
-      }
-    };
+  constructor() { }
 
   margin = null;
   width = null;
@@ -86,30 +38,33 @@ export class TreeBoxComponent implements OnInit {
   tooltip = null;
 
   ngOnInit() {
-    let x = this.maxDepth(this.treeData, 0);
+    if (this.treeData != null) {
+      let x = this.maxDepth(this.treeData, 0);
+      if (x < 2) x = 3;
 
-    this.margin = { top: 50, right: 90, bottom: 30, left: 90 };
-    this.width = x * 200 - this.margin.left - this.margin.right;
-    this.height = x * 150 - this.margin.top - this.margin.bottom;
+      this.margin = { top: 50, right: 90, bottom: 30, left: 90 };
+      this.width = x * 200 - this.margin.left - this.margin.right;
+      this.height = x * 150 - this.margin.top - this.margin.bottom;
 
-    this.treemap = d3.tree().size([this.height, this.width]);
+      this.treemap = d3.tree().size([this.height, this.width]);
 
-    this.tooltip = d3.select("#tool-tip").append("div")
-      .attr("class", "tooltipx")
-      .style("opacity", 0);
+      this.tooltip = d3.select("#tool-tip").append("div")
+        .attr("class", "tooltipx")
+        .style("opacity", 0);
 
-    this.svg = d3.select("#tree-box").append("svg")
-      .attr("width", this.width + this.margin.right + this.margin.left)
-      .attr("height", this.height + this.margin.top + this.margin.bottom)
-      .append("g")
-      .attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")");
+      this.svg = d3.select("#tree-box").append("svg")
+        .attr("width", this.width + this.margin.right + this.margin.left)
+        .attr("height", this.height + this.margin.top + this.margin.bottom)
+        .append("g")
+        .attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")");
 
-    this.root = d3.hierarchy(this.treeData, function (d: any) { return d.children; });
-    this.root.x0 = this.height / 2;
-    this.root.y0 = 0;
+      this.root = d3.hierarchy(this.treeData, function (d: any) { return d.children; });
+      this.root.x0 = this.height / 2;
+      this.root.y0 = 0;
 
-    this.update(this.root);
-    // d3.select(self.frameElement).style("height", "300px");
+      this.update(this.root);
+      // d3.select(self.frameElement).style("height", "300px");
+    }
   }
 
   update(source: any) {
@@ -167,7 +122,12 @@ export class TreeBoxComponent implements OnInit {
       this.tooltip.transition()
         .duration(200)
         .style("opacity", 1);
-      this.tooltip.html(d.data.data.txId + "<br>" + d.data.data.owner)
+      this.tooltip.html(
+        "<b>Owner : </b><i>" + d.data.data.owner + " (" + d.data.data.owner_nic + ")<br></i>" +
+        "<b>Extent : </b><i>" + d.data.data.extent + "<br></i>" +
+        "<b>Surveyor ID : </b><i>" + d.data.data.surveyor_id + "<br></i>" +
+        "<b>Notary ID : </b><i>" + d.data.data.notary_id + "<br></i>" +
+        "<b>Timestamp : </b><i>" + d.data.timestamp + "</i>")
         .style("left", (d3.event.pageX - 240) + "px")
         .style("top", (d3.event.pageY - 180) + "px");
     });

@@ -10,6 +10,7 @@ export enum BackendURLS {
     land_get_history = "/api/land/get-land-history/",
     land_buyer_verification = "/api/land/buyer-verification/",
     land_change_notary_vote = "/api/land/change-notary-vote/",
+    land_forking = "/api/land/land-forking/",
 
     user_login_backend = "/api/user/auth/login-backend",
     user_login_blockchain_identity_name = "/api/user/auth/login-blockchain-identity-name",

@@ -3,6 +3,17 @@ import { HttpResolverService } from './http-resolver.service';
 import { BackendURLS } from '../utils/backend-urls.enum';
 import { AuthService } from './auth.service';
 
+export interface BoundaryObject {
+  ltx: number,
+  lty: number,
+  rtx: number,
+  rty: number,
+  rbx: number,
+  rby: number,
+  lbx: number,
+  lby: number
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -68,6 +79,12 @@ export class BlockchainService {
   changeNotaryVote(newNicNo: string, id: string) {
     return this.httpResolverService.realizarHttpPost(
       BackendURLS.land_change_notary_vote, { userId: this.authServie.currentUser.id, id: id, newNicNo: newNicNo }
+    );
+  }
+
+  landForking(id: string, land1b: BoundaryObject, land2b: BoundaryObject) {
+    return this.httpResolverService.realizarHttpPost(
+      BackendURLS.land_forking, { userId: this.authServie.currentUser.id, id: id, land1b: land1b, land2b: land2b }
     );
   }
 

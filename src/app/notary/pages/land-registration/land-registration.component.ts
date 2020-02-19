@@ -4,6 +4,7 @@ import { BlockchainService } from 'src/app/shared/services/blockchain.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { Subscription } from 'rxjs';
 import { DOCUMENT } from '@angular/common';
+import { TreeData } from 'src/app/shared/components/tree-box/tree-box.component';
 
 interface LandInformation {
   id?: string,
@@ -35,18 +36,6 @@ interface PlanInformation {
   registeredAt?: string
 }
 
-interface HistRecord {
-  txId: string,
-  timestamp: number,
-  record: {
-    id: string,
-    parent_land: string,
-    extent: number,
-    rlregistry: string,
-    current_owner: string,
-  }
-}
-
 interface BuyerInformation {
   no: string,
   name: string,
@@ -63,7 +52,7 @@ interface BuyerInformation {
 export class LandRegistrationComponent implements OnInit, OnDestroy {
 
   constructor(
-    private authService: AuthService, 
+    private authService: AuthService,
     private blockchainService: BlockchainService,
     @Inject(DOCUMENT) private document: Document) { }
 
@@ -76,7 +65,7 @@ export class LandRegistrationComponent implements OnInit, OnDestroy {
   deedInformation: DeedInformation = null;
   planInformation: PlanInformation = null;
 
-  histRecords: HistRecord[] = [];
+  hist_data: TreeData = null;
 
   buyerInformation: BuyerInformation = null;
 
@@ -159,23 +148,9 @@ export class LandRegistrationComponent implements OnInit, OnDestroy {
   // second card submit method
   async submitLandInformation() {
     this.loading = true;
-    this.histRecords = [];
     this.p2(this.landInformation.id).then((res: any) => {
       if (res.success) {
-        res.data.forEach(record => {
-          let rec: HistRecord = {
-            txId: record.txId,
-            timestamp: record.timestamp.low,
-            record: {
-              id: record.value._id,
-              parent_land: record.value._parent_land_id,
-              extent: record.value._extent,
-              rlregistry: record.value._rlregistry,
-              current_owner: record.value._current_owner_nic,
-            }
-          }
-          this.histRecords.unshift(rec);
-        });
+        console.log(res.data);
       }
     }).catch((err) => console.log(err))
       .finally(() => {
@@ -187,7 +162,7 @@ export class LandRegistrationComponent implements OnInit, OnDestroy {
   // promise for second card
   p2 = (id: string) => {
     return new Promise((resolve, reject) => {
-      this.subS1 = this.blockchainService.getHistoryForLand(id).subscribe((res: any) => {
+      this.subS2 = this.blockchainService.getHistoryForLand(id).subscribe((res: any) => {
         resolve(res);
       }, (err: any) => {
         reject(err);
@@ -195,6 +170,7 @@ export class LandRegistrationComponent implements OnInit, OnDestroy {
     })
   }
 
+  // third card submit method
   submitLandHistory() {
     this.currentStep++;
   }
@@ -223,7 +199,7 @@ export class LandRegistrationComponent implements OnInit, OnDestroy {
 
   p3 = (nic: string) => {
     return new Promise((resolve, reject) => {
-      this.subS1 = this.blockchainService.buyerVerification(nic).subscribe((res: any) => {
+      this.subS3 = this.blockchainService.buyerVerification(nic).subscribe((res: any) => {
         resolve(res);
       }, (err: any) => {
         reject(err);
@@ -236,11 +212,11 @@ export class LandRegistrationComponent implements OnInit, OnDestroy {
   }
 
   submitCommitTransaction() {
-    this.p4(this.buyerInformation.no, this.landInformation.id).then((res:any) => {
+    this.p4(this.buyerInformation.no, this.landInformation.id).then((res: any) => {
       this.alert_type = "success";
       this.alert_content = "Notary vote committed successfully";
       this.document.getElementById("openAlertBoxButton").click();
-    }).catch((err:any) => {
+    }).catch((err: any) => {
       this.alert_type = "error";
       this.alert_content = "Notary vote not committed";
       this.document.getElementById("openAlertBoxButton").click();
@@ -260,10 +236,6 @@ export class LandRegistrationComponent implements OnInit, OnDestroy {
 
   resetOwnerVerify() {
     this.ownerVerifyForm.reset();
-  }
-
-  submitBuyerVerify() {
-
   }
 
   resetBuyerVerify() {

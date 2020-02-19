@@ -6,9 +6,10 @@ import { LoadingPageComponent } from './shared/components/loading-page/loading-p
 
 const routes: Routes = [
   { path: "", loadChildren: () => import('./home/home.module').then(m => m.HomeModule) },
-  { path: "lrbsl-rlr", loadChildren: () => import('./rlr/rlr.module').then( m => m.RlrModule) },
-  { path: "lrbsl-notary", loadChildren: () => import('./notary/notary.module').then( m => m.NotaryModule) },
-  { path: "lrbsl-surveyor", loadChildren: () => import('./surveyor/surveyor.module').then( m => m.SurveyorModule) },
+  { path: "lrbsl-rlr", loadChildren: () => import('./rlr/rlr.module').then(m => m.RlrModule) },
+  { path: "lrbsl-notary", loadChildren: () => import('./notary/notary.module').then(m => m.NotaryModule) },
+  { path: "lrbsl-surveyor", loadChildren: () => import('./surveyor/surveyor.module').then(m => m.SurveyorModule) },
+  { path: "lrbsl-registrations", loadChildren: () => import('./registrations/registrations.module').then(m => m.RegistrationsModule) },
   { path: "loading", component: LoadingPageComponent },
   { path: "**", component: Page404Component }
 ];

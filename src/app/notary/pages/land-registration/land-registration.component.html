@@ -1,15 +1,3 @@
-<div *ngIf="isShowCard(0)" class="row" style="margin-bottom: 20px;">
-    <div class="col" style="margin-top: -10px;">
-        <div class="shadow card" style="margin: 15px;"><a class="btn btn-link text-left card-header font-weight-bold"
-                data-toggle="collapse" aria-expanded="true" aria-controls="collapse-10" href="#collapse-10"
-                role="button">Testing</a>
-            <div class="collapse show" id="collapse-10">
-                <app-tree-box></app-tree-box>
-            </div>
-        </div>
-    </div>
-</div>
-
 <!-- land owner verification card -->
 <div *ngIf="isShowCard(0)" class="row" style="margin-bottom: 20px;">
     <div class="col" style="margin-top: -10px;">
@@ -179,43 +167,14 @@
 </div>
 
 <!-- land history card -->
-<div *ngIf="histRecords.length != 0 && isShowCard(2)" class="row" style="margin-bottom: 20px;">
+<div *ngIf="isShowCard(2)" class="row" style="margin-bottom: 20px;">
     <div class="col" style="margin-top: -10px;">
         <div class="shadow card" style="margin: 15px;"><a class="btn btn-link text-left card-header font-weight-bold"
                 data-toggle="collapse" aria-expanded="false" aria-controls="collapse-13" href="#collapse-13"
                 role="button">Land History Information</a>
             <div class={{showHideCards(2)}} id="collapse-13">
 
-                <div *ngFor="let rec of histRecords;let last = last; let i = index">
-                    <div class="row" style="margin-top: 13px;">
-                        <div class="col-5 mx-auto" style="margin-right: 10px;margin-left: 10px;">
-                            <div class="card shadow border-left-warning py-2">
-                                <div class="card-body">
-                                    <div class="row align-items-center no-gutters">
-                                        <div class="col mr-2">
-                                            <div class="text-uppercase text-warning font-weight-bold text-xs mb-1">
-                                                <span>Record ID : {{rec.txId}}</span></div>
-                                            <div class="text-dark font-weight-bold h5 mb-0">
-                                                <label style="font-size: 12px;">Timestamp :</label><i
-                                                    style="font-size: 12px;">{{rec.timestamp}}</i><br>
-                                                <label style="font-size: 12px;">Parent Land ID :</label><i
-                                                    style="font-size: 12px;">{{rec.record.parent_land}}</i><br>
-                                                <label style="font-size: 12px;">Owner NIC :</label><i
-                                                    style="font-size: 12px;">{{rec.record.current_owner}}</i>
-                                            </div>
-                                        </div>
-                                        <div class="col-auto"><i class="fas fa-map-marked-alt fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row" style="margin-top: 13px;" *ngIf="histRecords[i]!=last">
-                        <div class="col-3 mx-auto text-center" style="margin-right: 10px;margin-left: 10px;"><i
-                                class="fa fa-sort-up" style="font-size: 60px;"></i></div>
-                    </div>
-                </div>
+                <app-tree-box [treeData]="hist_data"></app-tree-box>
 
                 <div class="card-footer text-center"><a class="btn btn-success btn-icon-split" role="button"
                         style="margin-left: 10px;" (click)="submitLandHistory()"><span class="text-white-50 icon"><i
@@ -236,6 +195,7 @@
             style="height: 40px;width: 40px;"></span></div>
 </div>
 
+<!-- land buyer verification card -->
 <div *ngIf="isShowCard(3)" class="row" style="margin-bottom: 20px;">
     <div class="col" style="margin-top: -10px;">
         <div class="shadow card" style="margin: 15px;"><a class="btn btn-link text-left card-header font-weight-bold"
@@ -270,6 +230,8 @@
     <div class="col text-center" style="margin-top: -10px;"><span class="spinner-border spinner-border-sm" role="status"
             style="height: 40px;width: 40px;"></span></div>
 </div>
+
+<!-- buyer information card -->
 <div *ngIf="buyerInformation != null && isShowCard(4) && !loading" class="row" style="margin-bottom: 20px;">
     <div class="col" style="margin-top: -10px;">
         <div class="shadow card" style="margin: 15px;"><a class="btn btn-link text-left card-header font-weight-bold"
@@ -328,13 +290,14 @@
     <div class="col text-center" style="margin-top: -10px;"><span class="spinner-border spinner-border-sm" role="status"
             style="height: 40px;width: 40px;"></span></div>
 </div>
+
+<!-- transaction completion card -->
 <div *ngIf="isShowCard(5)" class="row" style="margin-bottom: 20px;">
     <div class="col" style="margin-top: -10px;">
-        <div class={{showHideCards(5)}} style="margin: 15px;"><a
-                class="btn btn-link text-left card-header font-weight-bold" data-toggle="collapse" aria-expanded="true"
-                aria-controls="collapse-16" href="#collapse-16" role="button">Land
+        <div class="shadow card" style="margin: 15px;"><a class="btn btn-link text-left card-header font-weight-bold" 
+            data-toggle="collapse" aria-expanded="true" aria-controls="collapse-16" href="#collapse-16" role="button">Land
                 Transaction Completion</a>
-            <div class="collapse show" id="collapse-16">
+            <div class="{{showHideCards(5)}}" id="collapse-16">
                 <div class="row" style="margin-top: 13px;">
                     <div class="col-5 text-center mx-auto" style="margin-right: 10px;margin-left: 10px;">
                         <ul class="list-group" style="margin-top: 10px;margin-bottom: 10px;">
