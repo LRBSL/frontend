@@ -13,7 +13,7 @@ const routes: Routes = [
     { path: "", pathMatch: "full", redirectTo: "dashboard" },
     { path: "dashboard", component: DashboardComponent },
     { path: "land-registration", component: LandRegistrationComponent },
-    { path: "search-information", component: SearchInformationComponent },
+    { path: "requests-and-information", component: SearchInformationComponent },
     { path: "profile", component: ProfileComponent }
   ]}
 ];

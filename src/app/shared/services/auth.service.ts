@@ -5,6 +5,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { NotaryRegister } from '../models/notary-register';
+import { userList } from '../utils/data';
 
 export interface AuthUser {
   type?: string,

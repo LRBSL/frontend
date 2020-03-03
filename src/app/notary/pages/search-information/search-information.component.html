@@ -1,1 +1,179 @@
-<p>search-information works!</p>
+<div *ngFor="let onGoTr of onGoTrs" class="row">
+  <div *ngIf="onGoTr.status" class="col" style="margin-top: -10px;">
+      <div class="shadow card" style="margin: 15px;"><a class="btn btn-link text-left card-header font-weight-bold"
+              data-toggle="collapse" aria-expanded="false" aria-controls="collapse-1" href="#collapse-1"
+              role="button">Transaction ID : {{onGoTr.txId}}</a>
+          <div class="collapse" id="collapse-1">
+              <div class="row">
+                  <div class="col">
+                      <ul style="margin-top: 16px;">
+                          <li><strong>Land ID :</strong> {{onGoTr.landId}}</li>
+                          <li><strong>Transaction Type :</strong> {{onGoTr.trType}}</li>
+                          <li><strong>RL Registry :</strong> {{onGoTr.rlregistry}}</li>
+                      </ul>
+                  </div>
+                  <div class="col">
+                      <ul style="margin-top: 16px;">
+                          <li><strong>Notary :</strong> {{onGoTr.notary}}</li>
+                          <li><strong>Surveyor :</strong> {{onGoTr.surveyor}}</li>
+                          <li><strong>Current Owner :</strong> {{onGoTr.currentOwner}}</li>
+                          <li><strong>Requested New Owner </strong>: {{onGoTr.requestNewOwner}}</li>
+                      </ul>
+                  </div>
+              </div>
+              <div class="card-footer"><a class="btn btn-warning btn-icon-split" role="button" 
+                data-toggle="modal" data-target="#deed-info"><span
+                          class="text-white-50 icon"><i class="fas fa-landmark"></i></span><span
+                          class="text-white text">Check Transaction Info</span></a><a class="btn btn-success btn-icon-split"
+                      role="button" style="margin-left: 10px;" (click)="confirmed()"><span class="text-white-50 icon"><i
+                              class="fas fa-check"></i></span><span class="text-white text">Notary
+                          Confirmed</span></a><a class="btn btn-danger btn-icon-split" role="button"
+                      style="margin-left: 10px;" (click)="rejected()"><span class="text-white-50 icon"><i
+                              class="fas fa-times"></i></span><span class="text-white text">Notary Rejected</span></a>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+
+<div class="modal fade" role="dialog" tabindex="-1" id="deed-info">
+  <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h4 class="modal-title"><strong>Transaction Information :</strong> Land_001</h4><button type="button"
+                  class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+          </div>
+          <div class="modal-body">
+              <!-- <div class="row">
+                  <div class="col">
+                      <ul style="margin-top: 16px;">
+                          <li><strong>Land ID :</strong> ####</li>
+                          <li><strong>Transaction Type :</strong> (Change Ownership / Forking)</li>
+                          <li><strong>RL Registry :</strong> ###</li>
+                      </ul>
+                  </div>
+                  <div class="col">
+                      <ul style="margin-top: 16px;">
+                          <li><strong>Notary :</strong> ##Name (ID)</li>
+                          <li><strong>Surveyor :</strong> ##Name (ID) - optional</li>
+                          <li><strong>Current Owner :</strong> ##Name (NIC)</li>
+                          <li><strong>Requested New Owner </strong>: ##Name (NIC)</li>
+                      </ul>
+                  </div>
+              </div> -->
+              <div class="row" style="margin-top: 13px;">
+                <div class="col text-center" style="margin-right: 10px;margin-left: 10px;"><label><strong>Land
+                            Information</strong></label>
+                    <div class="table-responsive table-bordered text-left">
+                        <table class="table table-bordered">
+                            <tbody>
+                                <tr>
+                                    <td class="bg-light">RL Registry</td>
+                                    <td>{{landInformation.rlregistry}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="bg-light">Current Owner NIC</td>
+                                    <td>{{landInformation.current_owner_nic}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="bg-light">Extent</td>
+                                    <td>{{landInformation.extent}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="bg-light">Boundaries</td>
+                                    <td>{{landInformation.boundaries}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="bg-light">Last Registered Notary ID</td>
+                                    <td>{{landInformation.notary_vote}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col text-center" style="margin-right: 10px;margin-left: 10px;"><label><strong>Land Owner
+                            Information</strong></label>
+                    <div class="table-responsive table-bordered">
+                        <table class="table table-bordered">
+                            <tbody>
+                                <tr>
+                                    <td class="bg-light">NIC No</td>
+                                    <td>{{ownerInformation.nic_no}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="bg-light">Name</td>
+                                    <td>{{ownerInformation.name}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="bg-light">Postal Address</td>
+                                    <td>{{ownerInformation.address}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="bg-light">Gender</td>
+                                    <td>{{ownerInformation.sex}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="bg-light">Registered Date</td>
+                                    <td>{{ownerInformation.regDate}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="margin-top: 18px;">
+                <div class="col text-center" style="margin-right: 10px;margin-left: 10px;"><label><strong>Land Deed
+                            Information</strong></label>
+                    <div class="table-responsive table-bordered">
+                        <table class="table table-bordered">
+                            <tbody>
+                                <tr>
+                                    <td class="bg-light">Deed ID</td>
+                                    <td>{{deedInformation.id}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="bg-light">Deed Type</td>
+                                    <td>{{deedInformation.type}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="bg-light">Registered Notary</td>
+                                    <td>{{deedInformation.registeredNotary}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="bg-light">Registered At</td>
+                                    <td>{{deedInformation.registeredAt}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col text-center" style="margin-right: 10px;margin-left: 10px;"><label><strong>Land Plan
+                            Information</strong></label>
+                    <div class="table-responsive table-bordered">
+                        <table class="table table-bordered">
+                            <tbody>
+                                <tr>
+                                    <td class="bg-light">Plan ID</td>
+                                    <td>{{planInformation.id}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="bg-light">Registered Surveyor</td>
+                                    <td>{{planInformation.registeredSurveyor}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="bg-light">Registered At</td>
+                                    <td>{{planInformation.registeredAt}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+          </div>
+          <div class="modal-footer"><button class="btn btn-light" type="button" data-dismiss="modal">Close</button>
+          </div>
+      </div>
+  </div>
+</div>
+
+<app-alert-box [type]="alert_type" [content]="alert_content"></app-alert-box>

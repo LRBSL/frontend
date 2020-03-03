@@ -24,21 +24,21 @@ export class LayoutComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.commonService.loadStyle(this.document, 'bootstrap-theme', "assets/bootstrap/css/bootstrap-rlr.min.css");
-    this.authService.checkCurrentUserExist('r');
-    this.p1(this.authService.currentUser.id).then((res: any) => {
-      if(res.success) { 
-        let user = res.data;
-        this.authService.currentUser = {
-          registeredId: user.registeredId,
-          publicName: user.publicName,
-          contactNo: user.contactNo,
-          postalAddress: user.postalAddress,
-          registeredAt: user.registeredAt
-        }
-      }
-    }).catch((err:any) => {
-      console.log(err);
-    })
+    // this.authService.checkCurrentUserExist('r');
+    // this.p1(this.authService.currentUser.id).then((res: any) => {
+    //   if(res.success) { 
+    //     let user = res.data;
+    //     this.authService.currentUser = {
+    //       registeredId: user.registeredId,
+    //       publicName: user.publicName,
+    //       contactNo: user.contactNo,
+    //       postalAddress: user.postalAddress,
+    //       registeredAt: user.registeredAt
+    //     }
+    //   }
+    // }).catch((err:any) => {
+    //   console.log(err);
+    // })
   }
 
   ngOnDestroy() {

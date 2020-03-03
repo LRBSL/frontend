@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { DOCUMENT } from '@angular/common';
 import { CommonService } from '../../services/common.service';
 import { Subscription } from 'rxjs';
+import { userList } from '../../utils/data';
 
 @Component({
   selector: 'app-loading-page',
@@ -17,7 +18,7 @@ export class LoadingPageComponent implements OnInit, OnDestroy {
   alert_type: string;
   alert_content: string;
 
-  subS1: Subscription;
+  // subS1: Subscription;
 
   constructor(
     private authService: AuthService,
@@ -28,35 +29,62 @@ export class LoadingPageComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.commonService.loadStyle(this.document, 'bootstrap-theme', "assets/bootstrap/css/bootstrap-home.min.css");
     this.tripleDotAnimation();
-    this.p1(this.authService.currentAuthUser.email, this.authService.currentAuthUser.password).then((res: any) => {
-      if (res.success) {
-        if(this.authService.currentAuthUser.type != res.data.type) {
+
+    // this.p1(this.authService.currentAuthUser.email, this.authService.currentAuthUser.password).then((res: any) => {
+    //   if (res.success) {
+    //     if(this.authService.currentAuthUser.type != res.data.type) {
+    //       throw new Error();
+    //     }
+    //     let user = res.data;
+    //     this.authService.currentUser = {
+    //       id: user.id,
+    //       email: user.emailAddress,
+    //       type: user.type,
+    //       createdAt: user.createdAt,
+    //       updatedAt: user.updatedAt
+    //     }
+    //     if (res.data.type == "r") { this.router.navigate(["/lrbsl-rlr"]); }
+    //     if (res.data.type == "n") { this.router.navigate(["/lrbsl-notary"]); }
+    //     if (res.data.type == "s") { this.router.navigate(["/lrbsl-surveyor"]); }
+    //   }
+    // }).catch((err: any) => {
+    //   this.alert_type = "error";
+    //   this.alert_content = "Blockchain authentication failed. Redirect to Home Page";
+    //   this.document.getElementById("openAlertBoxButton").click();
+    //   setTimeout(() => {
+    //     window.location.href = "/lrbsl";
+    //   }, 5000);
+    // });
+
+    this.p1(this.authService.currentAuthUser.email, this.authService.currentAuthUser.password)
+      .then((res: any) => {
+        if (this.authService.currentAuthUser.type != res.type) {
           throw new Error();
         }
-        let user = res.data;
+        let user = res;
         this.authService.currentUser = {
           id: user.id,
-          email: user.emailAddress,
+          email: user.email,
           type: user.type,
           createdAt: user.createdAt,
           updatedAt: user.updatedAt
         }
-        if (res.data.type == "r") { this.router.navigate(["/lrbsl-rlr"]); }
-        if (res.data.type == "n") { this.router.navigate(["/lrbsl-notary"]); }
-        if (res.data.type == "s") { this.router.navigate(["/lrbsl-surveyor"]); }
-      }
-    }).catch((err: any) => {
-      this.alert_type = "error";
-      this.alert_content = "Blockchain authentication failed. Redirect to Home Page";
-      this.document.getElementById("openAlertBoxButton").click();
-      setTimeout(() => {
-        window.location.href = "/lrbsl";
-      }, 5000);
-    });
+        if (res.type == "r") { this.router.navigate(["/lrbsl-rlr"]); }
+        if (res.type == "n") { this.router.navigate(["/lrbsl-notary"]); }
+        if (res.type == "s") { this.router.navigate(["/lrbsl-surveyor"]); }
+      }).catch((err: any) => {
+        this.alert_type = "error";
+        this.alert_content = "Blockchain authentication failed. Redirect to Home Page";
+        this.document.getElementById("openAlertBoxButton").click();
+        setTimeout(() => {
+          window.location.href = "/lrbsl";
+        }, 5000);
+      })
+
   }
 
   ngOnDestroy() {
-    this.subS1.unsubscribe();
+    // this.subS1.unsubscribe();
   }
 
   tripleDotAnimation() {
@@ -78,13 +106,24 @@ export class LoadingPageComponent implements OnInit, OnDestroy {
     }, 1000);
   }
 
+  // p1 = (email: string, password: string) => {
+  //   return new Promise((resolve, reject) => {
+  //     this.subS1 = this.authService.login(email, password).subscribe((res: any) => {
+  //       resolve(res);
+  //     }, (err: any) => {
+  //       reject(err);
+  //     })
+  //   });
+  // }
+
   p1 = (email: string, password: string) => {
     return new Promise((resolve, reject) => {
-      this.subS1 = this.authService.login(email, password).subscribe((res: any) => {
-        resolve(res);
-      }, (err: any) => {
-        reject(err);
-      })
+      userList.forEach((user) => {
+        if (user.email == email && user.password == password) {
+          resolve(user)
+        }
+      });
+      reject(new Error("Login failed"))
     });
   }
 }

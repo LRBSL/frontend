@@ -5,6 +5,7 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 import { Subscription } from 'rxjs';
 import { DOCUMENT } from '@angular/common';
 import { TreeData } from 'src/app/shared/components/tree-box/tree-box.component';
+import { landList, ownerList, deedList, planList, buyerList, onGoTrList } from 'src/app/shared/utils/data';
 
 interface LandInformation {
   id?: string,
@@ -19,7 +20,7 @@ interface OwnerInformation {
   nic_no?: string,
   name?: string,
   address?: string,
-  sex?: number[][],
+  sex?: string,
   regDate?: string
 }
 
@@ -90,47 +91,88 @@ export class LandRegistrationComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subS1.unsubscribe();
-    this.subS2.unsubscribe();
-    this.subS3.unsubscribe();
-    this.subS4.unsubscribe();
+    // this.subS1.unsubscribe();
+    // this.subS2.unsubscribe();
+    // this.subS3.unsubscribe();
+    // this.subS4.unsubscribe();
   }
 
   // first card submit method
+  // async submitOwnerVerify() {
+  //   if (this.ownerVerifyForm.valid) {
+  //     this.loading = true;
+  //     await this.p1(this.ownerVerifyForm.controls.nic.value, this.ownerVerifyForm.controls.key.value).then((res: any) => {
+  //       let landInfo = res.data;
+  //       this.landInformation = {
+  //         id: landInfo.land.id,
+  //         rlregistry: landInfo.land.rlregistry,
+  //         current_owner_nic: landInfo.land.current_owner_nic,
+  //         extent: landInfo.land.extent,
+  //         boundaries: landInfo.land.boundaries,
+  //         notary_vote: landInfo.land.notary_vote
+  //       };
+  //       this.ownerInformation = {
+  //         nic_no: landInfo.owner.no,
+  //         name: landInfo.owner.name,
+  //         address: landInfo.owner.postalAddress,
+  //         sex: landInfo.owner.gender,
+  //         regDate: landInfo.owner.registeredDate
+  //       };
+  //       this.deedInformation = {
+  //         id: landInfo.deed.id,
+  //         type: landInfo.deed.type,
+  //         registeredNotary: landInfo.deed.registeredNotary,
+  //         registeredAt: landInfo.deed.registeredAt
+  //       }
+  //       this.planInformation = {
+  //         id: landInfo.deed.id,
+  //         registeredSurveyor: landInfo.deed.registeredSurveyor,
+  //         registeredAt: landInfo.deed.registeredAt
+  //       }
+  //       this.loading = false;
+  //       this.currentStep++;
+  //     }).catch((err) => console.log(err));
+  //   }
+  // }
+
   async submitOwnerVerify() {
     if (this.ownerVerifyForm.valid) {
       this.loading = true;
-      await this.p1(this.ownerVerifyForm.controls.nic.value, this.ownerVerifyForm.controls.key.value).then((res: any) => {
-        let landInfo = res.data;
+      if (this.ownerVerifyForm.controls.nic.value == "123456789V"
+        && this.ownerVerifyForm.controls.key.value == "1234") {
         this.landInformation = {
-          id: landInfo.land.id,
-          rlregistry: landInfo.land.rlregistry,
-          current_owner_nic: landInfo.land.current_owner_nic,
-          extent: landInfo.land.extent,
-          boundaries: landInfo.land.boundaries,
-          notary_vote: landInfo.land.notary_vote
+          id: landList[0].id,
+          rlregistry: landList[0].rlregistry,
+          current_owner_nic: landList[0].current_owner_nic,
+          extent: landList[0].extent,
+          boundaries: landList[0].boundaries,
+          notary_vote: landList[0].notary_vote
         };
         this.ownerInformation = {
-          nic_no: landInfo.owner.no,
-          name: landInfo.owner.name,
-          address: landInfo.owner.postalAddress,
-          sex: landInfo.owner.gender,
-          regDate: landInfo.owner.registeredDate
+          nic_no: ownerList[0].nic_no,
+          name: ownerList[0].name,
+          address: ownerList[0].address,
+          sex: ownerList[0].sex,
+          regDate: ownerList[0].regDate
         };
         this.deedInformation = {
-          id: landInfo.deed.id,
-          type: landInfo.deed.type,
-          registeredNotary: landInfo.deed.registeredNotary,
-          registeredAt: landInfo.deed.registeredAt
+          id: deedList[0].id,
+          type: deedList[0].type,
+          registeredNotary: deedList[0].registeredNotary,
+          registeredAt: deedList[0].registeredAt
         }
         this.planInformation = {
-          id: landInfo.deed.id,
-          registeredSurveyor: landInfo.deed.registeredSurveyor,
-          registeredAt: landInfo.deed.registeredAt
+          id: planList[0].id,
+          registeredSurveyor: planList[0].registeredSurveyor,
+          registeredAt: planList[0].registeredAt
         }
         this.loading = false;
         this.currentStep++;
-      }).catch((err) => console.log(err));
+      } else {
+        this.alert_type = "error";
+        this.alert_content = "Owner verification failed";
+        this.document.getElementById("openAlertBoxButton").click();
+      }
     }
   }
 
@@ -146,17 +188,61 @@ export class LandRegistrationComponent implements OnInit, OnDestroy {
   }
 
   // second card submit method
+  // async submitLandInformation() {
+  //   this.loading = true;
+  //   this.p2(this.landInformation.id).then((res: any) => {
+  //     if (res.success) {
+  //       console.log(res.data);
+  //     }
+  //   }).catch((err) => console.log(err))
+  //     .finally(() => {
+  //       this.loading = false;
+  //       this.currentStep++;
+  //     });
+  // }
+
   async submitLandInformation() {
     this.loading = true;
-    this.p2(this.landInformation.id).then((res: any) => {
-      if (res.success) {
-        console.log(res.data);
-      }
-    }).catch((err) => console.log(err))
-      .finally(() => {
-        this.loading = false;
-        this.currentStep++;
-      });
+    this.hist_data = {
+      name: "tx1hb131hb1b31b-fds1-h1bjh1",
+      timestamp: 152425222,
+      data: {
+        extent: 10000,
+        notary_id: ["NOTARY_001"],
+        surveyor_id: "SUR_001",
+        owner_nic: "123456789V",
+        owner: "Thissa jayaweera"
+      },
+      children: [
+        {
+          name: "fsf2qeqe42-fds1-eqesfd",
+          timestamp: 152421123,
+          data: {
+            extent: 10000,
+            notary_id: ["NOTARY_001"],
+            surveyor_id: "SUR_001",
+            owner_nic: "123456785V",
+            owner: "Kasun Kanchana"
+          },
+          children: [
+            {
+              name: "sfas231ada-fsdffs-sdfsdfq1",
+              timestamp: 152411221,
+              data: {
+                extent: 10000,
+                notary_id: ["NOTARY_001"],
+                surveyor_id: "SUR_001",
+                owner_nic: "123456783V",
+                owner: "Kavinda Perera"
+              },
+              children: []
+            }
+          ]
+        }
+      ]
+    }
+    this.loading = false;
+    this.currentStep++;
   }
 
   // promise for second card
@@ -178,22 +264,21 @@ export class LandRegistrationComponent implements OnInit, OnDestroy {
   submitBuyerVerification() {
     this.loading = true;
     if (this.buyerVerifyForm.valid) {
-      this.p3(this.buyerVerifyForm.controls.nic.value).then((res: any) => {
-        if (res.success) {
-          let buyer = res.data;
-          this.buyerInformation = {
-            no: buyer.no,
-            name: buyer.name,
-            gender: buyer.gender,
-            postalAddress: buyer.postalAddress,
-            registeredDate: buyer.registeredDate
-          }
+      if(this.buyerVerifyForm.controls.nic.value == "234567890V") {
+        this.buyerInformation = {
+          no: buyerList[0].no,
+          name: buyerList[0].name,
+          gender: buyerList[0].gender,
+          postalAddress: buyerList[0].postalAddress,
+          registeredDate: buyerList[0].registeredDate
         }
         this.loading = false;
         this.currentStep++;
-      }).catch((err) => {
-        console.log(err);
-      })
+      } else {
+        this.alert_type = "error";
+        this.alert_content = "Buyer verification failed";
+        this.document.getElementById("openAlertBoxButton").click();
+      }
     }
   }
 
@@ -212,15 +297,25 @@ export class LandRegistrationComponent implements OnInit, OnDestroy {
   }
 
   submitCommitTransaction() {
-    this.p4(this.buyerInformation.no, this.landInformation.id).then((res: any) => {
+    onGoTrList[0].status = true;
+    if(onGoTrList[0].status) {
       this.alert_type = "success";
       this.alert_content = "Notary vote committed successfully";
       this.document.getElementById("openAlertBoxButton").click();
-    }).catch((err: any) => {
+    } else {
       this.alert_type = "error";
       this.alert_content = "Notary vote not committed";
       this.document.getElementById("openAlertBoxButton").click();
-    })
+    }
+    // this.p4(this.buyerInformation.no, this.landInformation.id).then((res: any) => {
+    //   this.alert_type = "success";
+    //   this.alert_content = "Notary vote committed successfully";
+    //   this.document.getElementById("openAlertBoxButton").click();
+    // }).catch((err: any) => {
+    //   this.alert_type = "error";
+    //   this.alert_content = "Notary vote not committed";
+    //   this.document.getElementById("openAlertBoxButton").click();
+    // })
   }
 
   p4 = (newNicNo: string, id: string) => {

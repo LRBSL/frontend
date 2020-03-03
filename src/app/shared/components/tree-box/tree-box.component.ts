@@ -9,7 +9,7 @@ export interface TreeData {
     owner_nic: string,
     extent: number,
     surveyor_id: string,
-    notary_id: string,
+    notary_id: string[],
   },
   timestamp: number
 }
@@ -126,7 +126,7 @@ export class TreeBoxComponent implements OnInit {
         "<b>Owner : </b><i>" + d.data.data.owner + " (" + d.data.data.owner_nic + ")<br></i>" +
         "<b>Extent : </b><i>" + d.data.data.extent + "<br></i>" +
         "<b>Surveyor ID : </b><i>" + d.data.data.surveyor_id + "<br></i>" +
-        "<b>Notary ID : </b><i>" + d.data.data.notary_id + "<br></i>" +
+        "<b>Notary IDs : </b><i>" + d.data.data.notary_id + "<br></i>" +
         "<b>Timestamp : </b><i>" + d.data.timestamp + "</i>")
         .style("left", (d3.event.pageX - 240) + "px")
         .style("top", (d3.event.pageY - 180) + "px");
